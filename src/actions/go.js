@@ -15,7 +15,6 @@ Automaton.Actions.Go = AutomatonAction.extend({
     act : function(environment, callback){
         //console.log(`[Action:Go ${JSON.stringify(this.options)}]`);
         var subactions = this.subactions;
-        console.log('??????@', this.options)
         if(this.options.form){
             let formSelector = `//form[@name='${this.options.form}']`;
             var xmlDoc = libxmljs.parseHtmlString(environment.lastFetch);
@@ -47,7 +46,6 @@ Automaton.Actions.Go = AutomatonAction.extend({
             }, (data)=>{
                 environment.url = parsed.href;
                 environment[this.options.target] = data.toString();
-                console.log('???????', environment)
                 this.subactions(environment, callback);
             });
         }
@@ -57,7 +55,6 @@ Automaton.Actions.Go = AutomatonAction.extend({
             }, (data)=>{
                 environment.url = this.options.url;
                 environment[this.options.target] = data.toString();
-                console.log('???????')
                 this.subactions(environment, callback);
             });
         }

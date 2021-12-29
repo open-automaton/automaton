@@ -64,7 +64,6 @@ Automaton.Actions.Set = AutomatonAction.extend({
                         let formSelector = `//form[@name='${this.options.form}']`;
                         var xmlDoc = libxmljs.parseHtmlString(value);
                         let selection = xmlDoc.find(formSelector)[0];
-                        console.log('SEL', formSelector, selection, JSON.stringify(value))
                         let input = null;
                         if(selection){
                             input = selection.find(`//input[@name='${this.options.target}']`)[0];

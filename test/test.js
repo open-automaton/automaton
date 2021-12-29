@@ -8,7 +8,7 @@ const AutomatonCheerioEngine = require('@open-automaton/cheerio-mining-engine');
 
 describe('strip-mine', function(){
     describe('automaton', function(){
-        it.skip('loads a canonical definition', function(done){
+        it('loads a canonical definition', function(done){
             fs.readFile(
                 path.join(
                     __dirname,
@@ -22,7 +22,7 @@ describe('strip-mine', function(){
             );
         });
 
-        it.skip('scrapes a static page', function(done){
+        it('scrapes a static page', function(done){
             let app = express();
             app.get('/', (req, res)=>{
                 res.send(fs.readFileSync(path.join(
@@ -105,8 +105,6 @@ describe('strip-mine', function(){
                         }, new AutomatonCheerioEngine());
                         scraper.run((err, data)=>{
                             data.matches.length.should.equal(2);
-                            console.log(data.matches[0])
-                            console.log(data.matches[1])
 
                             should.exist(data.matches[0]);
                             should.exist(data.matches[0].name);
