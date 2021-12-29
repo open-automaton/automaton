@@ -3,7 +3,8 @@ const path = require('path');
 const Automaton = require('../src/automaton');
 const fs = require('fs');
 const express = require('express');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const AutomatonCheerioEngine = require('@open-automaton/cheerio-mining-engine');
 
 describe('strip-mine', function(){
     describe('automaton', function(){
@@ -34,7 +35,7 @@ describe('strip-mine', function(){
                     should.not.exist(err);
                     let scraper = new Automaton(
                         body.toString(),
-                        new Automaton.Engines.Cheerio()
+                        new AutomatonCheerioEngine()
                     );
                     scraper.run((err, data)=>{
                         should.not.exist(err);
@@ -101,7 +102,7 @@ describe('strip-mine', function(){
                                 incomingName : 'foo',
                                 incomingTitle: 'bar'
                             }
-                        }, new Automaton.Engines.Cheerio());
+                        }, new AutomatonCheerioEngine());
                         scraper.run((err, data)=>{
                             data.matches.length.should.equal(2);
                             console.log(data.matches[0])

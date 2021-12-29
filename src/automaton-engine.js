@@ -1,5 +1,7 @@
 const makeMergedCopyAndExtendify = require('./extendify');
 
+let Automaton = {};
+
 Automaton.Engine = function(opts){
     this.browser = require("browser");
     this.options = opts || {};
