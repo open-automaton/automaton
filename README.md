@@ -1,6 +1,6 @@
 @open-automaton/automaton
 =========================
-A web scraping solution for ease of use, maintenance and (soon™) deployment. Compares favorably to the Kapow Katalyst(Now owned by Kofax).
+A web scraping solution for ease of use, maintenance and (soon™) deployment. Compares favorably to Kapow Katalyst(Now owned by Kofax).
 
 This technique was created to combat information traders who sell your personal information. Dating all the way back to Yahoo's "kevdb" database, which was then augmented at Microsoft and Infospace, then fragmented into a wide array little companies(Intellius, whitepages, all powered by this database, the Merlin database and later (after the intelligence community wanted into this pool) Axciom). They rebuild their databases (thus nullifying your "removal" request) monthly or quarterly, so I needed a robust monitoring and interaction solution that was simple enough to maintain that I could train people in XML, regex and xpath then give them the tools to maintain scripts.
 
