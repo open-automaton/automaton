@@ -58,7 +58,7 @@ If you wanted to run it inline, it's even simpler:
 const Automaton = require('@open-automaton/automaton');
 const AutomatonCheerioEngine = require('@open-automaton/cheerio-mining-engine');
 
-let scraper = new Automaton(
+(new Automaton(
     `<go url="http://www.whitepages.com/person">
         <set form="findperson_basic" target="firstname" variable="first_name"></set>
         <set form="findperson_basic" target="name" variable="last_name"></set>
@@ -79,8 +79,7 @@ let scraper = new Automaton(
         <emit variables="matches,corrections"></emit>
     </go>`,
     new AutomatonCheerioEngine()
-);
-scraper.run((err, data)=>{
+)).run((err, data)=>{
     //data is the scraped data, structured according to the definition
     server.close();
     done();
@@ -123,8 +122,10 @@ This project started out as a formalization of a set of techniques I have been u
 I have had no less than 5 people ask me recently about it and similar setups, so it was worthwhile to update some even older code to replace the strip-mine ecosystem.
 
 Testing
------
-The Mocha is still brewing
+-------
+```bash
+    ./node_modules/mocha/bin/mocha
+```
 
 Enjoy,
 
