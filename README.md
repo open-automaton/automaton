@@ -103,16 +103,16 @@ Scraper Actions
 Roadmap
 -------
 
-[ ] remove engines from core lib
-[ ] puppeteer engine
-[ ] jsdom engine
-[ ] command-line app
-[ ] strip-mine (work clustering)
-[ ] monitoring
-[ ] GUI app for scraper maintenance and command/control
-[ ] cleanup
-[ ] phantomjs engine (only because it's nearly ready)
-[ ] other languages (PHP, Java, Rust... )
+- [ ] remove engines from core lib
+- [ ] puppeteer engine
+- [ ] jsdom engine
+- [ ] command-line app
+- [ ] strip-mine (work clustering)
+- [ ] monitoring
+- [ ] GUI app for scraper maintenance and command/control
+- [ ] cleanup
+- [ ] phantomjs engine (only because it's nearly ready)
+- [ ] other languages (PHP, Java, Rust... )
 
 A note on the former life of the library:
 
