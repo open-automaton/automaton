@@ -45,8 +45,6 @@ fs.readFile('./whitepages_people_search.xml', (err, body)=>{
     );
     scraper.run((err, data)=>{
         //data is the scraped data, structured according to the definition
-        server.close();
-        done();
     });
 });
 ```
@@ -81,8 +79,6 @@ const AutomatonCheerioEngine = require('@open-automaton/cheerio-mining-engine');
     new AutomatonCheerioEngine()
 )).run((err, data)=>{
     //data is the scraped data, structured according to the definition
-    server.close();
-    done();
 });
 ```
 
