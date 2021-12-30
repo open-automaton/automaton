@@ -52,7 +52,40 @@ fs.readFile('./whitepages_people_search.xml', (err, body)=>{
 ```
 That's all it takes.
 
-If you wanted to run it inline, it's even simplere
+If you wanted to run it inline, it's even simpler:
+
+```js
+const Automaton = require('@open-automaton/automaton');
+const AutomatonCheerioEngine = require('@open-automaton/cheerio-mining-engine');
+
+let scraper = new Automaton(
+    `<go url="http://www.whitepages.com/person">
+        <set form="findperson_basic" target="firstname" variable="first_name"></set>
+        <set form="findperson_basic" target="name" variable="last_name"></set>
+        <set form="findperson_basic" target="where" variable="city_state"></set>
+        <go form="findperson_basic">
+            <set xpath="//ul.speedbump_query_data" variable="matches">
+                <set xpath="//li.speedbump_query_info/div.name/a" variable="name"></set>
+                <set xpath="//li.speedbump_query_info/div.age/a" variable="age"></set>
+                <set xpath="//li.speedbump_query_info/div.location/a" variable="location"></set>
+            </set>
+            <set xpath="//div.pse_track" variable="corrections">
+                <set xpath="//li.basic_info/a.name" variable="name"></set>
+                <set xpath="//li.basic_info/div" variable="age"></set>
+                <set xpath="//li.location/strong" variable="location"></set>
+                <set xpath="//li.household" variable="household"></set>
+            </set>
+        </go>
+        <emit variables="matches,corrections"></emit>
+    </go>`,
+    new AutomatonCheerioEngine()
+);
+scraper.run((err, data)=>{
+    //data is the scraped data, structured according to the definition
+    server.close();
+    done();
+});
+```
 
 Deployment
 ----------
