@@ -3,7 +3,7 @@
 let libs = {};
 //dynamic index of lib references
 
-function DOM(html, callback){
+/* function DOM(html, callback){
     switch(DOM.engine){
         case 'jsdom':
             if(!libs.jsdom){
@@ -170,4 +170,6 @@ module.exports = {
         if(noArrays) results.push(data);
         return results;
     }
-};
+};*/
+
+module.exports = require('@open-automaton/automaton-engine/src/dom-tool.js');

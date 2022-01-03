@@ -4,17 +4,6 @@ var array = require('async-arrays');
 //var art = require('AsciiArt');
 
 //webkit
-var phantom = require('node-phantom');
-
-//var xpath = require('xpath')
-
-var xmldom = require('xmldom').DOMParser;
-var jsdom = require('jsdom');
-jsdom.defaultDocumentFeatures = {
-    FetchExternalResources: false,
-    ProcessExternalResources: false
-};
-var xpath = require('jsdom/lib/jsdom/level3/xpath');
 
 var HTMLParser = require('html-parser');
 
@@ -76,25 +65,13 @@ Automaton.prototype.run = function(callback){
     });
 }
 
-
-Automaton.xpath = function(selector, value){
-    var document = jsdom.jsdom(value);
-    var nodes = xpath.evaluate(selector, document, document.body).nodes;
-    return nodes;
-};
-
 Automaton.Actions = {
     Go : require('./actions/go'),
     Set : require('./actions/set'),
     Emit : require('./actions/emit'),
 };
 
-Automaton.Engines = {
-    Textual : require('./engines/textual'),
-    Minimal : require('./engines/minimal'),
-    Headless : require('./engines/headless'),
-    Cheerio : require('./engines/cheerio'),
-};
+Automaton.Engines = {};
 
 Automaton.Actions.each = function(){
 
