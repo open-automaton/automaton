@@ -63,15 +63,17 @@ Automaton.Actions.Set = AutomatonAction.extend({
                         }
                         let formSelector = `//form[@name='${this.options.form}']`;
                         var xmlDoc = libxmljs.parseHtmlString(value);
-                        let selection = xmlDoc.find(formSelector)[0];
+                        let formSelection = xmlDoc.find(formSelector)[0];
                         let input = null;
+                        let action = 'GET';
                         if(selection){
-                            input = selection.find(`//input[@name='${this.options.target}']`)[0];
+                            input = formSelection.find(`//input[@name='${this.options.target}']`)[0];
+                            action = formSelection.attr('action') && formSelection.attr('action').value();
                         }
-                        let action = selection.attr('action') && selection.attr('action').value();
                         let method = ((
-                            selection.attr('method') &&
-                            selection.attr('method').value()
+                            formSelection &&
+                            formSelection.attr('method') &&
+                            formSelection.attr('method').value()
                         ) || 'POST').toUpperCase();
                         environment.forms[this.options.form][this.options.target] =
                             environment[this.options.variable];

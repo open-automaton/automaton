@@ -33,16 +33,20 @@ Automaton.Actions.Go = AutomatonAction.extend({
                 //TODO: better path joining
                 action = parsed.path + action
             }
-            parsed.set('pathname', action)
+            parsed.set('pathname', action);
+            let submit = xmlDoc.find(
+                `//form[@name='${this.options.form}']//input[@type='submit']`
+            )[0];
             let passableData = environment.forms &&
                 environment.forms[this.options.form];
             this.engine.fetch({
                 referer: environment.url,
                 url : parsed.href,
                 data: passableData,
-                type: this.options.type || 'JSON',
+                type: this.options.type || 'FORM',
                 method: method,
-                form: this.options.form
+                form: this.options.form,
+                submit: submit?submit.attr('name').value():null
             }, (data)=>{
                 environment.url = parsed.href;
                 environment[this.options.target] = data.toString();

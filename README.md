@@ -1,10 +1,8 @@
 @open-automaton/automaton
 =========================
-A web scraping solution for ease of use, maintenance and (soon™) deployment. Compares favorably to Kapow Katalyst(Now owned by Kofax).
+A web scraping solution for ease of use, maintenance and (soon™) deployment. Compares favorably to Kapow(Now owned by Kofax).
 
-This technique was created to combat information traders who sell your personal information. Dating all the way back to Yahoo's "kevdb" database, which was then augmented at Microsoft and Infospace, then fragmented into a wide array little companies(Intellius, whitepages, all powered by this database, the Merlin database and later (after the intelligence community wanted into this pool) Axciom). They rebuild their databases (thus nullifying your "removal" request) monthly or quarterly, so I needed a robust monitoring and interaction solution that was simple enough to maintain that I could train people in XML, regex and xpath then give them the tools to maintain scripts.
-
-Because of that, the examples are going to refer to real-world examples of how to monitor or remove yourself these organizations
+It uses an XML based DSL which both defines the scraping process as well as the structure of the returned data.
 
 Usage
 -----
@@ -50,11 +48,11 @@ fs.readFile('./whitepages_people_search.xml', (err, body)=>{
 ```
 That's all it takes.
 
-If you wanted to run it inline, it's even simpler:
+If you wanted to run it inline, it's even simpler(we'll do it in [puppeteer](https://www.npmjs.com/package/puppeteer) this time):
 
 ```js
 const Automaton = require('@open-automaton/automaton');
-const AutomatonCheerioEngine = require('@open-automaton/cheerio-mining-engine');
+const AutomatonPuppeteerEngine = require('@open-automaton/puppeteer-mining-engine');
 
 (new Automaton(
     `<go url="http://www.whitepages.com/person">
@@ -76,7 +74,7 @@ const AutomatonCheerioEngine = require('@open-automaton/cheerio-mining-engine');
         </go>
         <emit variables="matches,corrections"></emit>
     </go>`,
-    new AutomatonCheerioEngine()
+    new AutomatonPuppeteerEngine()
 )).run((err, data)=>{
     //data is the scraped data, structured according to the definition
 });
@@ -113,9 +111,14 @@ A note on the former life of the library:
 
 This was just rewritten from Scratch so I could get rid of the GPL attribution.
 
-This project started out as a formalization of a set of techniques I have been using to scrape the web for almost a decade now, but as it turned out the CTO surprised me with some requirements: GPL and a very specific server configuration.  Later we realized there were only 4 sources to scrape once per quarter (In other words: they had no need for scrapers in the first place, much less a highly customized solution that runs on the interval many definitions break). So it became frozen in time.
+Where did this come from?
+-------------------------
 
-I have had no less than 5 people ask me recently about it and similar setups, so it was worthwhile to update some even older code to replace the strip-mine ecosystem.
+This technique was created to combat information traders who sell your personal information. Dating all the way back to Yahoo's "kevdb" database, which was then augmented at Microsoft and Infospace, then fragmented into a wide array little companies(Intellius, whitepages, all powered by this database, the Merlin database and later (after the intelligence community wanted into this pool) Axciom). They rebuild their databases (thus nullifying your "removal" request) monthly or quarterly, so I needed a robust monitoring and interaction solution that was simple enough to maintain that I could train people in XML, regex and xpath then give them the tools to maintain scripts. This is why the examples refer to real-world cases monitoring or removing your presence in these lists.
+
+Automaton(and later, strip-mine) started out as a formalization of a set of techniques I have been using to scrape the web for almost a decade now, but as it turned out the CTO surprised me with some requirements: GPLv3 and a very specific server configuration.  Later we realized there were only 4 sources to scrape once per quarter (In other words: they had no need for scrapers in the first place, much less those designed to be a continual data conduit and minimize breakage). They also did not realize the patent implications of using GPLv3 and promptly buried it. Afterwards, it became frozen in time.
+
+I've been continually taking questions about it recently about it and similar setups, so it was worthwhile to update some even older code to replace the strip-mine ecosystem.
 
 Testing
 -------
