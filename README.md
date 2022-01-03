@@ -103,6 +103,8 @@ Scraper Actions
 - ```method``` : This manually sets the form submission value<sup>*</sup>
 - ```type``` : This sets the submission type for the form <sup>*</sup> Available values are: ```json```, ```application/json```, ```form```
 
+<sup>*</sup> - Some engines that use the browser will only submit using the form configuration on the page and ignore these options.
+
 ```xml
 <set>
 ```
