@@ -1,7 +1,7 @@
 {
     "name": "@open-automaton/automaton",
     "homepage": "https://github.com/open-automaton/automaton",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "main": "src/automaton.js",
     "description": "A scraping DSL and runtime",
     "keywords": [
@@ -23,7 +23,7 @@
         "url": "git@github.com:open-automaton/automaton.git"
     },
     "dependencies": {
-        "@open-automaton/automaton-engine": "0.0.5",
+        "@open-automaton/automaton-engine": "0.0.6",
         "async-arrays": "^1.0.1",
         "browser": "^0.2.6",
         "child_process": "*",
