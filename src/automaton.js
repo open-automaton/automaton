@@ -77,6 +77,22 @@ Automaton.Actions.each = function(){
 
 };
 
+Automaton.scrape = async function(definitionPath, engine){
+    let result = await new Promise((resolve, reject)=>{
+        fs.readFile(definitionPath, (err, body)=>{
+            let scraper = new Automaton(
+                body.toString(),
+                engine
+            );
+            scraper.run((err, data)=>{
+                if(err) return reject(err);
+                resolve(data);
+            });
+        });
+    });
+    return result;
+}
+
 const Emitter = require('extended-emitter');
 
 

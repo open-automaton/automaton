@@ -34,23 +34,54 @@ Here we're going to submit a form to whitepages.com and harvest the results:
 
 Now that we have a definition, we'll need to run it:
 
-```js
-const Automaton = require('@open-automaton/automaton');
-const AutomatonCheerioEngine = require('@open-automaton/cheerio-mining-engine');
-
-fs.readFile('./whitepages_people_search.xml', (err, body)=>{
-    let scraper = new Automaton(
-        body.toString(),
+- **Cheerio**
+    ```js
+    const Automaton = require('@open-automaton/automaton');
+    const AutomatonCheerioEngine = require('@open-automaton/cheerio-mining-engine');
+    let results = await Automaton.scrape(
+        './whitepages_people_search.xml',
         new AutomatonCheerioEngine()
     );
-    scraper.run((err, data)=>{
-        //data is the scraped data, structured according to the definition
-    });
-});
-```
+    ```
+- **Puppeteer**
+    ```js
+    const Automaton = require('@open-automaton/automaton');
+    const AutomatonPuppeteerEngine = require('@open-automaton/puppeteer-mining-engine');
+    let results = await Automaton.scrape(
+        './whitepages_people_search.xml',
+        new AutomatonPuppeteerEngine()
+    );
+    ```
+- **Playwright: Chromium**
+    ```js
+    const Automaton = require('@open-automaton/automaton');
+    const AutomatonPlaywrightEngine = require('@open-automaton/playwright-mining-engine');
+    let results = await Automaton.scrape(
+        './whitepages_people_search.xml',
+        new AutomatonPlaywrightEngine({type:'chromium'})
+    );
+    ```
+- **Playwright: Firefox**
+    ```js
+    const Automaton = require('@open-automaton/automaton');
+    const AutomatonPlaywrightEngine = require('@open-automaton/playwright-mining-engine');
+    let results = await Automaton.scrape(
+        './whitepages_people_search.xml',
+        new AutomatonPlaywrightEngine({type:'firefox'})
+    );
+    ```
+- **Playwright: Webkit**
+    ```js
+    const Automaton = require('@open-automaton/automaton');
+    const AutomatonPlaywrightEngine = require('@open-automaton/playwright-mining-engine');
+    let results = await Automaton.scrape(
+        './whitepages_people_search.xml',
+        new AutomatonPlaywrightEngine({type:'webkit'})
+    );
+    ```
 That's all it takes.
 
-If you wanted to run it inline, it's even simpler(we'll do it in [puppeteer](https://www.npmjs.com/package/puppeteer) this time):
+Let's take that apart and run it manually(in [puppeteer](https://www.npmjs.com/package/puppeteer) this time:
 
 ```js
 const Automaton = require('@open-automaton/automaton');
