@@ -219,7 +219,7 @@ Roadmap
 - [x] jsdom engine
 - [ ] emit action
 - [x] command-line app
-- [ ] attributes: until-exists, timeout,
+- [ ] attributes: until-exists, timeout, delay
 - [ ] support images in select
 - [ ] strip-mine (work clustering)
 - [ ] monitoring
