@@ -79,6 +79,15 @@ Now that we have a definition, we'll need to run it:
         new AutomatonPlaywrightEngine({type:'webkit'})
     );
     ```
+- **JSDom**
+    ```js
+    const Automaton = require('@open-automaton/automaton');
+    const AutomatonJSDomEngine = require('@open-automaton/jsdom-mining-engine');
+    let results = await Automaton.scrape(
+        './whitepages_people_search.xml',
+        new AutomatonJSDomEngine()
+    );
+    ```
 That's all it takes.
 
 Let's take that apart and run it manually(in [puppeteer](https://www.npmjs.com/package/puppeteer) ) this time:
@@ -207,10 +216,10 @@ Roadmap
 - [x] remove engines from core lib
 - [x] puppeteer engine
 - [x] playwright engine
-- [ ] jsdom engine
+- [x] jsdom engine
 - [ ] emit action
 - [x] command-line app
-- [ ] attributes: until-exists, timeout, 
+- [ ] attributes: until-exists, timeout,
 - [ ] support images in select
 - [ ] strip-mine (work clustering)
 - [ ] monitoring
