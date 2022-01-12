@@ -81,7 +81,7 @@ Now that we have a definition, we'll need to run it:
     ```
 That's all it takes.
 
-Let's take that apart and run it manually(in [puppeteer](https://www.npmjs.com/package/puppeteer) this time:
+Let's take that apart and run it manually(in [puppeteer](https://www.npmjs.com/package/puppeteer) ) this time:
 
 ```js
 const Automaton = require('@open-automaton/automaton');
@@ -206,14 +206,19 @@ Roadmap
 
 - [x] remove engines from core lib
 - [x] puppeteer engine
+- [x] playwright engine
 - [ ] jsdom engine
 - [ ] emit action
-- [-] command-line app
+- [x] command-line app
+- [ ] attributes: until-exists, timeout, 
+- [ ] support images in select
 - [ ] strip-mine (work clustering)
 - [ ] monitoring
 - [ ] GUI app for scraper maintenance and command/control
 - [ ] cleanup
 - [ ] phantomjs engine (only because it's nearly ready)
+- [ ] chrome-browser-plugin engine
+- [ ] selenium engine
 - [ ] other languages (PHP, Java, Rust... )
 
 A note on the former life of the library:
