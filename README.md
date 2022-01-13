@@ -128,53 +128,41 @@ Deployment
 
 Maintaining Scrapers
 --------------------
-Let's build a scraper for intellius(requires [automaton-cli](https://www.npmjs.com/package/@open-automaton/automaton-cli)):
+First you'll want to understand [xpath](https://en.wikipedia.org/wiki/XPath) (and probably [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model), [regex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) and [css selectors](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors)) before we proceed, as most of the selectors in a good definition are xpath which is as general as possible.
+
+Once you're done with that, the `auto` command( get by installing [`@open-automaton/automaton-cli`](https://www.npmjs.com/package/@open-automaton/automaton-cli)) has a few useful functions:
+
+### `auto fetch`
+You want to scrape the *state* of the DOM once the page is loaded, but if you use a tool like `CURL` you'll only get the *transfer state* of the page, which is probably not useful. `auto fetch` pulls the state of the DOM out of a running browser and displays that HTML.
 
 ```bash
-# fetch the full body of the form you are scraping
-auto fetch https://www.intelius.com/people-search/ > search-form.html
+# fetch the full body of the form you are scraping and save it in page.hml
+auto fetch https://domain.com/path/ > page.html
+```
+### `auto xpath`
+The first thing you might do against the HTML you've captured is pull all the forms out of the page, like this:
+```bash
 # check the forms on the page
-auto xpath "//form" search-form.html
-# craft a selector which only selects the target form
-auto xpath "//form[@name='people-search-form']" search-form.html
-# select all the inputs you need to populate from this form
-auto xpath "//form[@name='people-search-form']//input|//form[@name='people-search-form']//select" search-form.html
-```
-This results in:
-
-```json
-[
-  '<input type="text" name="firstName" maxlength="30" value="" placeholder="Enter first name" class="validate">',
-  '<input type="text" name="lastName" maxlength="30" value="" placeholder="Enter last name" class="validate">',
-  '<input type="text" name="city" value="" placeholder="Enter city">',
-  '<select class="state-select" name="state"> ... '
-]
-```
-So now we have all the information we need about that form:
-
-```xml
-<go url="https://www.intelius.com/people-search/">
-    <set form="people-search-form" target="firstName" variable="first"></set>
-    <set form="people-search-form" target="lastName" variable="last"></set>
-    <set form="people-search-form" target="city" variable="city"></set>
-    <set form="people-search-form" target="state" variable="stateCode"></set>
-    <go form="people-search-form">
-        <set xpath="//section[@id='people']//div[@class='person']" variable="matches">
-            <set xpath="//div[@class='name-and-address']/h4" variable="name"></set>
-            <set xpath="//div[@class='name-and-address']//span[@class='phone']" variable="hasPhone"></set>
-            <set xpath="//div[@class='name-and-address']//span[@class='education']" variable="hasPhone"></set>
-            <set xpath="//div[@class='name-and-address']//div[@class='address']" variable="location"></set>
-            <set xpath="//div[@class='name-and-address']//span[@class='display-age']" variable="age"></set>
-            <![CDATA[more inputs farmed here]]>
-        </set>
-    </go>
-    <emit variables="matches"></emit>
-</go>
+auto xpath "//form" page.html
 ```
 
-And because intellius uses cloudflare shenanigans to prevent you from scraping, you'll need to use the puppeteer engine.
+Assuming you've identified the form name you are targeting as `my-form-name`, you then want to get all the inputs out of it with something like:
 
-Now reclaiming your own data is a little easier(or for that matter claiming someone elses, which shouldn't be legal, but is here in the US until we have an equivalent of the GDPR).
+```bash
+# select all the inputs you need to populate from this form:
+auto xpath "//form[@name='my-form-name']//input|//form[@name='my-form-name']//select|//form[@name='my-form-name']//textarea" page.html
+```
+
+### `auto run`
+From this you should be able to construct a primitive scrape definition(See the examples below for more concrete instruction). Once you have this definition you can do sample scrapes with:
+
+```bash
+TBD
+```
+
+Examples of builing scrapers
+[Scraping Google](docs/google.md)
+[Scraping Intellius](docs/intellius.md)
 
 Scraper Actions
 --------------------
