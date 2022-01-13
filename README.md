@@ -122,8 +122,46 @@ const AutomatonPuppeteerEngine = require('@open-automaton/puppeteer-mining-engin
 });
 ```
 
-Deployment
-----------
+Scraper Actions
+--------------------
+### go
+A progression from page to page, either by loading a url, submitting a form or clicking a UI element requires either `url` or `form`
+
+`type` accepts ```json```, ```application/json``` or ```form```
+
+Some engines that use the browser will only submit using the form configuration on the page and ignore the `method` and `type` options.
+
+```xml
+<go
+    url="https://domain.com/path/"
+    form="form-name"
+    method="post"
+    type="application/json"
+></go>
+```
+
+### set
+Either use a variable to set a target input on a form or set a variable using an [xpath](https://developer.mozilla.org/en-US/docs/Web/XPath) or [regex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+
+```xml
+<set
+    variable="variable-name"
+    xpath="//xpath/expression"
+    regex="[regex]+.(expression)"
+    form="form-name"
+    target="input-element-name"
+></set>
+```
+### emit
+emit a value to the return and optionally post that value to a remote url
+
+```xml
+<emit
+    variables="some,variables"
+    remote="https://domain.com/path/"
+></emit>
+```
+
 [TBD]
 
 Maintaining Scrapers
@@ -165,39 +203,9 @@ Examples of builing scrapers:
 - [Scraping Google](docs/google.md)
 - [Scraping Intellius](docs/intellius.md)
 
-Scraper Actions
---------------------
-```xml
-<go>
-```
-
-### Available Attributes
-
-- ```url``` : The url to load (if applicable)
-- ```form``` : The form name, which is present on the currently fetched page
-- ```method``` : This manually sets the form submission value<sup>*</sup>
-- ```type``` : This sets the submission type for the form <sup>*</sup> Available values are: ```json```, ```application/json```, ```form```
-
-<sup>*</sup> - Some engines that use the browser will only submit using the form configuration on the page and ignore these options.
-
-```xml
-<set>
-```
-
-### Available Attributes
-
-- ```variable``` : The variable to set, or the variable we read from
-- ```xpath``` : The [xpath](https://developer.mozilla.org/en-US/docs/Web/XPath) selector for the value
-- ```regex``` : The [regex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) selector for the value
-- ```form``` : This determines which form contains the settable inputs
-- ```target``` : This is the selector for the form element to set
-
-```xml
-<emit>
-```
-
+Deployment
+----------
 [TBD]
-
 
 Roadmap
 -------
@@ -210,6 +218,7 @@ Roadmap
 - [x] command-line app
 - [ ] attributes: until-exists, timeout, delay
 - [ ] support images in select
+- [ ] proxy support
 - [ ] strip-mine (work clustering)
 - [ ] monitoring
 - [ ] GUI app for scraper maintenance and command/control
@@ -219,18 +228,7 @@ Roadmap
 - [ ] selenium engine
 - [ ] other languages (PHP, Java, Rust... )
 
-A note on the former life of the library:
-
-This was just rewritten from Scratch so I could get rid of the GPL attribution.
-
-Where did this come from?
--------------------------
-
-This technique was created to combat information traders who sell your personal information. Dating all the way back to Yahoo's "kevdb" database, which was then augmented at Microsoft and Infospace, then fragmented into a wide array of little companies(Intellius, whitepages, etc... all powered by this database), the Merlin database and later (after the intelligence community wanted into this pool) Axciom. They rebuild their databases (thus nullifying your "removal" request) monthly or quarterly, so I needed a robust monitoring and interaction solution that was simple enough to maintain that I could train people in XML, regex and xpath then give them the tools to maintain scripts. This is why the examples refer to real-world cases monitoring or removing your presence in these lists.
-
-Automaton(and later, strip-mine) started out as a formalization of these techniques I have been using to scrape the web for almost a decade now, but as I ported it to JS from PHP & Java, a CTO surprised me with some requirements: GPLv3 and a non generalizable server configuration. I realized there were only 4 sources to scrape once per quarter (In other words: they had no need for scrapers in the first place, much less those designed to be a continual data conduit and minimize breakage). They also did not realize the patent implications of using GPLv3 and promptly buried it. Afterwards, it became frozen in time.
-
-I've been continually taking questions about it recently, so it was worthwhile to update some even older code to replace the strip-mine ecosystem.
+[Where did this come from?](docs/history.md)
 
 Testing
 -------
