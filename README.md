@@ -217,7 +217,7 @@ Roadmap
 - [x] puppeteer engine
 - [x] playwright engine
 - [x] jsdom engine
-- [ ] emit action
+- [x] emit action
 - [x] command-line app
 - [ ] attributes: until-exists, timeout, delay
 - [ ] support images in select
