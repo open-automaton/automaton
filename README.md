@@ -198,7 +198,7 @@ From this you should be able to construct a primitive scrape definition(See the 
 TBD
 ```
 
-Examples of builing scrapers:
+Examples of building scrapers:
 
 - [Scraping Google](docs/google.md)
 - [Scraping Intellius](docs/intellius.md)
