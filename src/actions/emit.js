@@ -28,10 +28,10 @@ Automaton.Actions.Emit = AutomatonAction.extend({
                 method : 'POST',
                 data : JSON.stringify(environment['_emitted_'])
             }, (err, req, body)=>{
-                this.subactions(environment, callback);
+                this.subactionsWithAttributes(environment, callback);
             });
         }else{
-            this.subactions(environment, callback);
+            this.subactionsWithAttributes(environment, callback);
         }
     }
 });

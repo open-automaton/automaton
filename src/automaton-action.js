@@ -40,6 +40,52 @@ Automaton.Action.prototype.profile = function(indent){
         child.profile(indent+'   ');
     });
 };
+const timeoutByUnit = (value)=>{
+    let trimmed = value.trim();
+    let number = parseInt(value);
+    let unit = trimmed.substring(number.toString().length).trim().toLowerCase();
+    console.log(number, unit);
+    switch(unit){
+        case 's':
+        case 'seconds':
+        case 'second':
+            return 1000 * number;
+        case 'm':
+        case 'minute':
+        case 'minutes':
+            return 1000 * 60 * number;
+    }
+}
+Automaton.Action.prototype.subactionsWithAttributes = function(environment, callback){
+    let timedout = false;
+    let terminated = true;
+    let intervalLength = 3000; //every 3 seconds
+    if(this.options['until-exists']){
+        let interval = setInterval(()=>{
+            let results = DOM.xpath(
+                this.options['until-exists'],
+                environment.lastFetch
+            );
+            if(results && results.length && !timedout){
+                clearInterval(interval);
+                this.subactions(environment, callback)
+            }
+        }, intervalLength);
+    }else{
+        this.subactions(environment, callback)
+    }
+    //todo: make this start from fetch, not return
+    let start = Date.now();
+    if(this.options.timeout){
+        let timeInMillis = timeoutByUnit(this.options.timeout);
+        let interval = setInterval(()=>{
+            if(terminated) return clearInterval(interval);
+            if( (Date.now()-start) >= timeInMillis){
+                timedout = true;
+            }
+        }, intervalLength);
+    }
+}
 Automaton.Action.prototype.subactions = function(environment, callback){
     if(this.parallel){
         var count = 0;
@@ -62,7 +108,7 @@ Automaton.Action.prototype.subactions = function(environment, callback){
                 if(!child){
                     throw new Error('Encountered null child on iteration '+index);
                 }
-                child.act(environment, function(res){
+                child.actWithAttributes(environment, function(res){
                     Object.keys(environment).forEach((key)=>{
                         results[key] = environment[key];
                     });
@@ -76,8 +122,23 @@ Automaton.Action.prototype.subactions = function(environment, callback){
         }
     }
 };
+
 Automaton.Action.prototype.act = function(environment, callback){
     this.subactions(environment, callback);
+};
+
+Automaton.Action.prototype.actWithAttributes = function(environment, callback){
+    if(this.options.delay){
+        let parts = this.options.delay.split('-').map((s)=>s.trim());
+        let bottom = timeoutByUnit(parts[0]);
+        let top = timeoutByUnit(parts[0] || parts[1]);
+        let timeout = Math.floor(Math.random() * (top-bottom));
+        return setTimeout(()=>{
+            this.act(environment, callback);
+        }, timeout)
+    }else{
+        this.act(environment, callback);
+    }
 };
 
 Automaton.Action.prototype.hasChildren = function(){

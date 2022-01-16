@@ -50,7 +50,7 @@ Automaton.Actions.Go = AutomatonAction.extend({
             }, (data)=>{
                 environment.url = parsed.href;
                 environment[this.options.target] = data.toString();
-                this.subactions(environment, callback);
+                this.subactionsWithAttributes(environment, callback);
             });
         }
         if(this.options.url && !this.options.form){
@@ -59,7 +59,7 @@ Automaton.Actions.Go = AutomatonAction.extend({
             }, (data)=>{
                 environment.url = this.options.url;
                 environment[this.options.target] = data.toString();
-                this.subactions(environment, callback);
+                this.subactionsWithAttributes(environment, callback);
             });
         }
     }

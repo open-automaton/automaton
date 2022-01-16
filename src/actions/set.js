@@ -26,7 +26,7 @@ Automaton.Actions.Set = AutomatonAction.extend({
             }
             var results = [];
             Arrays.forEachEmission((selection || []), (item, key, done)=>{
-                this.subactions({lastFetch:item}, (env)=>{
+                this.subactionsWithAttributes({lastFetch:item}, (env)=>{
                     delete env.lastFetch;
                     delete env.lastSelection;
                     results.push(env);
