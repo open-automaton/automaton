@@ -184,9 +184,11 @@ Roadmap
 - [x] jsdom engine
 - [x] emit action
 - [x] command-line app
-- [ ] attributes: until-exists, timeout, delay
+- [x] attributes: until-exists, timeout, delay
 - [ ] support images in select
 - [ ] proxy support
+- [ ] robots.txt
+- [ ] remote work client (turing tests, etc)
 - [ ] strip-mine (work clustering)
 - [ ] monitoring
 - [ ] GUI app for scraper maintenance and command/control
