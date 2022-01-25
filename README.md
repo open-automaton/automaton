@@ -39,34 +39,37 @@ Now that we have a definition, we'll need to run it.
 2. Then Import the mining engine you want to use
     - **Cheerio**
         ```js
-        const Engine = require('@open-automaton/cheerio-mining-engine');
+        const MiningEngine = require('@open-automaton/cheerio-mining-engine');
+        let myEngine = new MiningEngine();
         ```
     - **Puppeteer**
         ```js
         const Engine = require('@open-automaton/puppeteer-mining-engine');
+        let myEngine = new MiningEngine();
         ```
     - **Playwright: Chromium**
         ```js
         const Engine = require('@open-automaton/playwright-mining-engine');
+        let myEngine = new MiningEngine({type:'chromium'});
         ```
     - **Playwright: Firefox**
         ```js
         const Engine = require('@open-automaton/playwright-mining-engine');
+        let myEngine = new MiningEngine({type:'firefox'});
         ```
     - **Playwright: Webkit**
         ```js
         const Engine = require('@open-automaton/playwright-mining-engine');
+        let myEngine = new MiningEngine({type:'webkit'});
         ```
     - **JSDom**
         ```js
         const Engine = require('@open-automaton/jsdom-mining-engine');
+        let myEngine = new MiningEngine();
         ```
-3. Last you need to do the scrape:
+3. Last you need to do the scrape(in an `async` function):
     ```js
-    let results = await Automaton.scrape(
-        './whitepages_people_search.xml',
-        new Engine()
-    );
+    let results = await Automaton.scrape('definition.xml', myEngine);
     ```
 That's all it takes, if you need a [different usage pattern](docs/detailed-usage.md) that is supported as well.
 
