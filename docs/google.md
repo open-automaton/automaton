@@ -28,7 +28,20 @@ auto xpath "//form[@role='search']" search-form.html
 
 5. now, let's extract all the form inputs
 ```bash
-auto xpath "//form[@role='search']/input" search-form.html
+auto xpath "//form[@role='search']//input" search-form.html
+```
+and you get something like:
+```json
+[
+    "<input class=\"gLFyf gsfi\" jsaction=\"paste:puy29d;\" maxlength=\"2048\" name=\"q\" type=\"text\" aria-autocomplete=\"both\" aria-haspopup=\"false\" autocapitalize=\"off\" autocomplete=\"off\" autocorrect=\"off\" autofocus=\"\" role=\"combobox\" spellcheck=\"false\" title=\"Search\" value=\"\" aria-label=\"Search\" data-ved=\"0ahUKEwjGnouyzrf1AhVrDjQIHTmsCpQQ39UDCAY\">",
+    "<input class=\"gNO89b\" value=\"Google Search\" aria-label=\"Google Search\" name=\"btnK\" type=\"submit\" data-ved=\"0ahUKEwjGnouyzrf1AhVrDjQIHTmsCpQQ4dUDCAk\">",
+    "<input class=\"RNmpXc\" value=\"I'm Feeling Lucky\" aria-label=\"I'm Feeling Lucky\" name=\"btnI\" type=\"submit\" jsaction=\"trigger.kWlxhc\" data-ved=\"0ahUKEwjGnouyzrf1AhVrDjQIHTmsCpQQ19QECAo\">",
+    "<input class=\"gNO89b\" value=\"Google Search\" aria-label=\"Google Search\" name=\"btnK\" type=\"submit\" data-ved=\"0ahUKEwjGnouyzrf1AhVrDjQIHTmsCpQQ4dUDCA0\">",
+    "<input id=\"gbqfbb\" value=\"I'm Feeling Lucky\" aria-label=\"I'm Feeling Lucky\" name=\"btnI\" type=\"submit\" data-ved=\"0ahUKEwjGnouyzrf1AhVrDjQIHTmsCpQQnRsIDg\">",
+    "<input name=\"source\" type=\"hidden\" value=\"hp\">",
+    "<input value=\"YcPkYYbqD-uc0PEPudiqoAk\" name=\"ei\" type=\"hidden\">",
+    "<input value=\"ALs-wAMAAAAAYeTRcWUJbAzdy9nVUxqjl1u4XqQ978FR\" name=\"iflsig\" type=\"hidden\">"
+]
 ```
 
 6. we can now add the form fields and submission to the definition
@@ -83,4 +96,4 @@ auto xpath "//div[@id='search']/div/div" goog-out.html
 </go>
 ```
 
-That's all there is until I add a paging feature. 
+That's all there is until I add a paging feature.
