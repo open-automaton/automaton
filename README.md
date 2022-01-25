@@ -30,60 +30,42 @@ Here we're going to submit a form to whitepages.com (this definition is a few ye
 </go>
 ```
 
-Now that we have a definition, we'll need to run it:
+Now that we have a definition, we'll need to run it.
 
-- **Cheerio**
+1. First, import automaton:
     ```js
     const Automaton = require('@open-automaton/automaton');
-    const AutomatonCheerioEngine = require('@open-automaton/cheerio-mining-engine');
-    let results = await Automaton.scrape(
-        './whitepages_people_search.xml',
-        new AutomatonCheerioEngine()
-    );
     ```
-- **Puppeteer**
+2. Then Import the mining engine you want to use
+    - **Cheerio**
+        ```js
+        const Engine = require('@open-automaton/cheerio-mining-engine');
+        ```
+    - **Puppeteer**
+        ```js
+        const Engine = require('@open-automaton/puppeteer-mining-engine');
+        ```
+    - **Playwright: Chromium**
+        ```js
+        const Engine = require('@open-automaton/playwright-mining-engine');
+        ```
+    - **Playwright: Firefox**
+        ```js
+        const Engine = require('@open-automaton/playwright-mining-engine');
+        ```
+    - **Playwright: Webkit**
+        ```js
+        const Engine = require('@open-automaton/playwright-mining-engine');
+        ```
+    - **JSDom**
+        ```js
+        const Engine = require('@open-automaton/jsdom-mining-engine');
+        ```
+3. Last you need to do the scrape:
     ```js
-    const Automaton = require('@open-automaton/automaton');
-    const AutomatonPuppeteerEngine = require('@open-automaton/puppeteer-mining-engine');
     let results = await Automaton.scrape(
         './whitepages_people_search.xml',
-        new AutomatonPuppeteerEngine()
-    );
-    ```
-- **Playwright: Chromium**
-    ```js
-    const Automaton = require('@open-automaton/automaton');
-    const AutomatonPlaywrightEngine = require('@open-automaton/playwright-mining-engine');
-    let results = await Automaton.scrape(
-        './whitepages_people_search.xml',
-        new AutomatonPlaywrightEngine({type:'chromium'})
-    );
-    ```
-- **Playwright: Firefox**
-    ```js
-    const Automaton = require('@open-automaton/automaton');
-    const AutomatonPlaywrightEngine = require('@open-automaton/playwright-mining-engine');
-    let results = await Automaton.scrape(
-        './whitepages_people_search.xml',
-        new AutomatonPlaywrightEngine({type:'firefox'})
-    );
-    ```
-- **Playwright: Webkit**
-    ```js
-    const Automaton = require('@open-automaton/automaton');
-    const AutomatonPlaywrightEngine = require('@open-automaton/playwright-mining-engine');
-    let results = await Automaton.scrape(
-        './whitepages_people_search.xml',
-        new AutomatonPlaywrightEngine({type:'webkit'})
-    );
-    ```
-- **JSDom**
-    ```js
-    const Automaton = require('@open-automaton/automaton');
-    const AutomatonJSDomEngine = require('@open-automaton/jsdom-mining-engine');
-    let results = await Automaton.scrape(
-        './whitepages_people_search.xml',
-        new AutomatonJSDomEngine()
+        new Engine()
     );
     ```
 That's all it takes, if you need a [different usage pattern](docs/detailed-usage.md) that is supported as well.
