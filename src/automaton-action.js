@@ -1,6 +1,7 @@
 const makeMergedCopyAndExtendify = require('./extendify');
 const Emitter = require('extended-emitter');
 const Arrays = require('async-arrays');
+const log = require('loglevel');
 
 let Automaton = {};
 
@@ -11,6 +12,7 @@ Automaton.Action = function(engine, opts){
     this.parallel = false;
     this.initialize(engine, this.options);
     (new Emitter).onto(this);
+    this.log.levels = log.levels;
 }
 
 Automaton.Action.extend = function(cls, cns){
@@ -34,11 +36,13 @@ Automaton.Action.prototype.eachChild = function(fn){
     });
 };
 Automaton.Action.prototype.profile = function(indent){
-    if(!indent) indent = '';
-    console.log(indent+'['+this.name+JSON.stringify(this.options)+']');
+    let lines = [];
+    lines.push((indent||'')+'['+this.name+JSON.stringify(this.options)+']');
     this.eachChild(function(child){
-        child.profile(indent+'   ');
+        lines = lines.concat(child.profile((indent||'')+'   '));
     });
+    if(indent) return lines;
+    else return lines.join("\n");
 };
 const timeoutByUnit = (value)=>{
     let trimmed = value.trim();
@@ -125,6 +129,59 @@ Automaton.Action.prototype.subactions = function(environment, callback){
 
 Automaton.Action.prototype.act = function(environment, callback){
     this.subactions(environment, callback);
+};
+
+Automaton.Action.log = {};
+Automaton.Action.log.levels = log.levels;
+let level = log.levels.ERROR;
+Automaton.Action.log.mode = 'text';
+Object.defineProperty(Automaton.Action.log, 'level', {
+    get: function(){
+        return level;
+    },
+    set: function(newValue){
+        if(Object.values(
+            Automaton.Action.log.levels
+        ).indexOf(newValue) === -1) throw new Error(
+            'Unknown Value: '+newValue
+        );
+        log.setDefaultLevel(newValue);
+        level = newValue;
+    },
+    enumerable: true,
+    configurable: true
+});
+
+Automaton.Action.prototype.log = function(message, level, data){
+    let logData = data || {level, message};
+    let outBoundMessage = null;
+    switch(Automaton.Action.log.mode){
+        case 'json' :
+            outBoundMessage = JSON.stringify(logData);
+            break;
+        case 'text' :
+        default :
+            outBoundMessage = message;
+            break;
+    }
+    if(outBoundMessage) switch(level){
+        case log.levels.TRACE :
+            log.trace(outBoundMessage)
+            break;
+        case log.levels.WARN :
+            log.warn(outBoundMessage)
+            break;
+        case log.levels.ERROR :
+            log.error(outBoundMessage)
+            break;
+        case log.levels.INFO :
+            log.info(outBoundMessage)
+            break;
+        case log.levels.DEBUG :
+        default :
+            log.debug(outBoundMessage)
+            break;
+    }
 };
 
 Automaton.Action.prototype.actWithAttributes = function(environment, callback){

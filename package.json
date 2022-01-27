@@ -31,6 +31,7 @@
         "extended-emitter": "^1.1.0",
         "html-parser": "^0.11.0",
         "libxmljs": "^0.19.7",
+        "loglevel": "^1.8.0",
         "postman-request": "^2.88.1-postman.30",
         "url-parse": "^1.5.4",
         "xmldom": "^0.6.0"

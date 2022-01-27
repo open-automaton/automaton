@@ -4,6 +4,19 @@ const Arrays = require('async-arrays');
 const libxmljs = require("libxmljs");
 
 let Automaton = { Actions:{} };
+let formatLog = (message, level)=>{
+    return '[ACTION: '+(
+        Object.keys(Automaton.Actions)[0] || '?'
+    ).toUpperCase()+'] '+ message;
+}
+
+let xPathFor = (selector)=>{
+    switch(selector[0]){
+        case '/' : return this.options.form;
+        case '@' : return `//form[${selector}]`
+        default : return `//form[@name='${selector}']`
+    }
+}
 
 Automaton.Actions.Set = AutomatonAction.extend({
     initialize : function(engine, options){
@@ -14,7 +27,10 @@ Automaton.Actions.Set = AutomatonAction.extend({
         AutomatonAction.prototype.initialize.call(this, engine, options);
     },
     act : function(environment, callback){
-        //console.log(`[Action:Set ${JSON.stringify(this.options)}]`);
+        if(this.engine.debug) this.log(
+            formatLog(`${JSON.stringify(this.options)}`,
+            this.log.levels.DEBUG
+        ));
         var selection = null;
         if(this.options.variable && this.options.source){
             var value = environment[this.options.source];
@@ -61,13 +77,13 @@ Automaton.Actions.Set = AutomatonAction.extend({
                         if(!environment.forms[this.options.form] ){
                             environment.forms[this.options.form]  = {};
                         }
-                        let formSelector = `//form[@name='${this.options.form}']`;
+                        let formSelector = xPathFor(this.options.form);
                         var xmlDoc = libxmljs.parseHtmlString(value);
                         let formSelection = xmlDoc.find(formSelector)[0];
                         let input = null;
                         let action = 'GET';
                         if(selection){
-                            input = formSelection.find(`//input[@name='${this.options.target}']`)[0];
+                            input = formSelection.find(xPathFor(this.options.target))[0];
                             action = formSelection.attr('action') && formSelection.attr('action').value();
                         }
                         let method = ((

@@ -1,8 +1,21 @@
 const AutomatonAction = require('../automaton-action');
 const libxmljs = require("libxmljs");
-var parseURL = require('url-parse')
+var parseURL = require('url-parse');
 
 let Automaton = { Actions:{} };
+let formatLog = (message, level)=>{
+    return '[ACTION: '+(
+        Object.keys(Automaton.Actions)[0] || '?'
+    ).toUpperCase()+'] '+ message;
+}
+
+let xPathFor = (selector)=>{
+    switch(selector[0]){
+        case '/' : return this.options.form;
+        case '@' : return `//form[${selector}]`
+        default : return `//form[@name='${selector}']`
+    }
+}
 
 Automaton.Actions.Go = AutomatonAction.extend({
     initialize : function(engine, options){
@@ -13,10 +26,13 @@ Automaton.Actions.Go = AutomatonAction.extend({
         AutomatonAction.prototype.initialize.call(this, engine, options);
     },
     act : function(environment, callback){
-        //console.log(`[Action:Go ${JSON.stringify(this.options)}]`);
+        if(this.engine.debug) this.log(
+            formatLog(`${JSON.stringify(this.options)}`,
+            this.log.levels.DEBUG
+        ));
         var subactions = this.subactions;
         if(this.options.form){
-            let formSelector = `//form[@name='${this.options.form}']`;
+            let formSelector = xPathFor(this.options.form);
             var xmlDoc = libxmljs.parseHtmlString(environment.lastFetch);
             let selection = xmlDoc.find(formSelector)[0];
             let input = null;
@@ -35,7 +51,7 @@ Automaton.Actions.Go = AutomatonAction.extend({
             }
             parsed.set('pathname', action);
             let submit = xmlDoc.find(
-                `//form[@name='${this.options.form}']//input[@type='submit']`
+                `${xPathFor(this.options.form)}//input[@type='submit']`
             )[0];
             let passableData = environment.forms &&
                 environment.forms[this.options.form];
