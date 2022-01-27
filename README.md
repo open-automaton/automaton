@@ -209,11 +209,15 @@ auto xpath "//form[@name='my-form-name']//input|//form[@name='my-form-name']//se
 
 </p></details></td></tr>
 <!-- STEP 5 -->
-<tr><td><details><summary> 5) Save result set groups </summary><p>
+<tr><td><details><summary> 5) Save the form results url  </summary><p>
 
 </p></details></td></tr>
 <!-- STEP 6 -->
-<tr><td><details><summary> 6) Save result set fields </summary><p>
+<tr><td><details><summary> 6) Save result set groups </summary><p>
+
+</p></details></td></tr>
+<!-- STEP 7 -->
+<tr><td><details><summary> 7) Save result set fields </summary><p>
 
 </p></details></td></tr>
 
