@@ -1,7 +1,7 @@
 const makeMergedCopyAndExtendify = require('./extendify');
 const Emitter = require('extended-emitter');
 const Arrays = require('async-arrays');
-const log = require('loglevel');
+const log = require('simple-log-function');
 
 let Automaton = {};
 
@@ -12,7 +12,8 @@ Automaton.Action = function(engine, opts){
     this.parallel = false;
     this.initialize(engine, this.options);
     (new Emitter).onto(this);
-    this.log.levels = log.levels;
+    this.log = log;
+    this.log.prefix = 'AUTO: ';
 }
 
 Automaton.Action.extend = function(cls, cns){
@@ -131,7 +132,9 @@ Automaton.Action.prototype.act = function(environment, callback){
     this.subactions(environment, callback);
 };
 
-Automaton.Action.log = {};
+Automaton.Action.log = log;
+
+/*Automaton.Action.log = {};
 Automaton.Action.log.levels = log.levels;
 let level = log.levels.ERROR;
 Automaton.Action.log.mode = 'text';
@@ -152,7 +155,37 @@ Object.defineProperty(Automaton.Action.log, 'level', {
     configurable: true
 });
 
+function callerFile(depth) {
+    let originalFunc = Error.prepareStackTrace;
+    let callerfile;
+    let depth = depth || 1;
+    let pos = 0;
+    try {
+        let err = new Error();
+        let currentfile;
+        Error.prepareStackTrace = function(err, stack){ return stack; };
+        currentfile = err.stack.shift().getFileName();
+        while (err.stack.length && pos < depth) {
+            callerfile = err.stack.shift().getFileName();
+            if(currentfile !== callerfile){
+                pos++;
+                callerfile = currentfile;
+                if(pos <= depth){
+                    break;
+                }
+            }
+        }
+    } catch(e){}
+    Error.prepareStackTrace = originalFunc;
+    return callerfile;
+}
+
+makeHeader = (file)=>{
+    return `[ACTION: ${file.split('/').pop().split('.').shift().toUpperCase()}] `
+}
+
 Automaton.Action.prototype.log = function(message, level, data){
+    if(level > log.getLevel()) return; //do nothing if we're out of range
     let logData = data || {level, message};
     let outBoundMessage = null;
     switch(Automaton.Action.log.mode){
@@ -161,7 +194,9 @@ Automaton.Action.prototype.log = function(message, level, data){
             break;
         case 'text' :
         default :
-            outBoundMessage = message;
+            outBoundMessage = makeHeader(callerFile()) + message + (
+                data? '  '+JSON.stringify(data):''
+            );
             break;
     }
     if(outBoundMessage) switch(level){
@@ -182,7 +217,7 @@ Automaton.Action.prototype.log = function(message, level, data){
             log.debug(outBoundMessage)
             break;
     }
-};
+};*/
 
 Automaton.Action.prototype.actWithAttributes = function(environment, callback){
     if(this.options.delay){

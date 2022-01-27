@@ -3,11 +3,6 @@ const libxmljs = require("libxmljs");
 var parseURL = require('url-parse');
 
 let Automaton = { Actions:{} };
-let formatLog = (message, level)=>{
-    return '[ACTION: '+(
-        Object.keys(Automaton.Actions)[0] || '?'
-    ).toUpperCase()+'] '+ message;
-}
 
 let xPathFor = (selector)=>{
     switch(selector[0]){
@@ -26,10 +21,7 @@ Automaton.Actions.Go = AutomatonAction.extend({
         AutomatonAction.prototype.initialize.call(this, engine, options);
     },
     act : function(environment, callback){
-        if(this.engine.debug) this.log(
-            formatLog(`${JSON.stringify(this.options)}`,
-            this.log.levels.DEBUG
-        ));
+        this.log(`start`, this.log.levels.DEBUG, this.options);
         var subactions = this.subactions;
         if(this.options.form){
             let formSelector = xPathFor(this.options.form);

@@ -4,11 +4,6 @@ const Arrays = require('async-arrays');
 const libxmljs = require("libxmljs");
 
 let Automaton = { Actions:{} };
-let formatLog = (message, level)=>{
-    return '[ACTION: '+(
-        Object.keys(Automaton.Actions)[0] || '?'
-    ).toUpperCase()+'] '+ message;
-}
 
 let xPathFor = (selector)=>{
     switch(selector[0]){
@@ -27,10 +22,7 @@ Automaton.Actions.Set = AutomatonAction.extend({
         AutomatonAction.prototype.initialize.call(this, engine, options);
     },
     act : function(environment, callback){
-        if(this.engine.debug) this.log(
-            formatLog(`${JSON.stringify(this.options)}`,
-            this.log.levels.DEBUG
-        ));
+        this.log(`start`, this.log.levels.DEBUG, this.options);
         var selection = null;
         if(this.options.variable && this.options.source){
             var value = environment[this.options.source];
