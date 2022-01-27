@@ -113,7 +113,12 @@ That's all it takes, if you need a [different usage pattern](docs/detailed-usage
 
 Scraper Actions
 --------------------
-### go
+
+<table>
+<tr><td> The automaton DSL is centered around 3 actions which navigate and populate the returned dataset. Many attributes are common to all elements, and most common use cases are covered.</td></tr>
+<!-- STEP 1 -->
+<tr><td><details><summary> go </summary><p>
+
 A progression from page to page, either by loading a url, submitting a form or clicking a UI element requires either `url` or `form`
 
 `type` accepts ```json```, ```application/json``` or ```form```
@@ -129,7 +134,10 @@ Some engines that use the browser will only submit using the form configuration 
 ></go>
 ```
 
-### set
+</p></details></td></tr>
+<!-- STEP 2 -->
+<tr><td><details><summary> set </summary><p>
+
 Either use a variable to set a target input on a form or set a variable using an [xpath](https://developer.mozilla.org/en-US/docs/Web/XPath) or [regex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 
 ```xml
@@ -141,7 +149,11 @@ Either use a variable to set a target input on a form or set a variable using an
     target="input-element-name"
 ></set>
 ```
-### emit
+
+</p></details></td></tr>
+<!-- STEP 3 -->
+<tr><td><details><summary> emit </summary><p>
+
 emit a value to the return and optionally post that value to a remote url
 
 ```xml
@@ -150,6 +162,10 @@ emit a value to the return and optionally post that value to a remote url
     remote="https://domain.com/path/"
 ></emit>
 ```
+
+</p></details></td></tr>
+
+</table>
 
 [TBD]
 
