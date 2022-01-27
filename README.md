@@ -172,9 +172,11 @@ Maintaining Scrapers
 Here's a basic process for data behind a simple form
 <table>
 <tr><td>
+
 First you'll want to understand [xpath](https://en.wikipedia.org/wiki/XPath) (and probably [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model), [regex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) and [css selectors](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors)) before we proceed, as most of the selectors in a good definition are xpath which is as general as possible.
 
 Once you're done with that, the `auto` command( get by installing [`@open-automaton/automaton-cli`](https://www.npmjs.com/package/@open-automaton/automaton-cli)) has a few useful functions we'll be using.
+
 </td></tr>
 <!-- STEP 1 -->
 <tr><td><details><summary> 1) Save the form url </summary><p>
