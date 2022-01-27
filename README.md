@@ -30,48 +30,86 @@ Here we're going to submit a form to whitepages.com (this definition is a few ye
 </go>
 ```
 
-Now that we have a definition, we'll need to run it.
+<table><tr><td colspan="3">
 
-1. First, import automaton:
+`automaton` definitions can be used from the command line, from your own code *or* from a GUI (Soon™).
+</td></tr><tr><td valign="top">
+<details><summary> In Code </summary><p>
+
+<!-- SUBTABLE -->
+<table>
+<!-- STEP 1 -->
+<tr><td><details><summary> First, import automaton </summary><p>
+
+```js
+const Automaton = require('@open-automaton/automaton');
+```
+
+</p></details></td></tr>
+<!-- STEP 2 -->
+<tr><td><details><summary> Then Import the mining engine you want to use </summary><p>
+
+- **Cheerio**
     ```js
-    const Automaton = require('@open-automaton/automaton');
+    const MiningEngine = require('@open-automaton/cheerio-mining-engine');
+    let myEngine = new MiningEngine();
     ```
-2. Then Import the mining engine you want to use
-    - **Cheerio**
-        ```js
-        const MiningEngine = require('@open-automaton/cheerio-mining-engine');
-        let myEngine = new MiningEngine();
-        ```
-    - **Puppeteer**
-        ```js
-        const Engine = require('@open-automaton/puppeteer-mining-engine');
-        let myEngine = new MiningEngine();
-        ```
-    - **Playwright: Chromium**
-        ```js
-        const Engine = require('@open-automaton/playwright-mining-engine');
-        let myEngine = new MiningEngine({type:'chromium'});
-        ```
-    - **Playwright: Firefox**
-        ```js
-        const Engine = require('@open-automaton/playwright-mining-engine');
-        let myEngine = new MiningEngine({type:'firefox'});
-        ```
-    - **Playwright: Webkit**
-        ```js
-        const Engine = require('@open-automaton/playwright-mining-engine');
-        let myEngine = new MiningEngine({type:'webkit'});
-        ```
-    - **JSDom**
-        ```js
-        const Engine = require('@open-automaton/jsdom-mining-engine');
-        let myEngine = new MiningEngine();
-        ```
-3. Last you need to do the scrape(in an `async` function):
+- **Puppeteer**
     ```js
-    let results = await Automaton.scrape('definition.xml', myEngine);
+    const Engine = require('@open-automaton/puppeteer-mining-engine');
+    let myEngine = new MiningEngine();
     ```
+- **Playwright: Chromium**
+    ```js
+    const Engine = require('@open-automaton/playwright-mining-engine');
+    let myEngine = new MiningEngine({type:'chromium'});
+    ```
+- **Playwright: Firefox**
+    ```js
+    const Engine = require('@open-automaton/playwright-mining-engine');
+    let myEngine = new MiningEngine({type:'firefox'});
+    ```
+- **Playwright: Webkit**
+    ```js
+    const Engine = require('@open-automaton/playwright-mining-engine');
+    let myEngine = new MiningEngine({type:'webkit'});
+    ```
+- **JSDom**
+    ```js
+    const Engine = require('@open-automaton/jsdom-mining-engine');
+    let myEngine = new MiningEngine();
+    ```
+
+</p></details></td></tr>
+<!-- STEP 3 -->
+<tr><td><details><summary> Last you need to do the scrape(in an `async` function) </summary><p>
+
+```js
+let results = await Automaton.scrape('definition.xml', myEngine);
+```
 That's all it takes, if you need a [different usage pattern](docs/detailed-usage.md) that is supported as well.
+
+</p></details></td></tr>
+
+</table>
+<!-- END SUBTABLE -->
+
+</p></details></td><td valign="top">
+
+<details><summary> CLI </summary><p>
+
+```bash
+    npm install -g automaton-cli
+    auto --help
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> GUI </summary><p>
+
+[TBD]
+
+</p></details></td></tr></table>
 
 Scraper Actions
 --------------------
@@ -171,11 +209,10 @@ Roadmap
 - [ ] support images in select
 - [ ] proxy support
 - [ ] robots.txt
-- [ ] remote work client (turing tests, etc)
 - [ ] strip-mine (work clustering)
 - [ ] monitoring
-- [ ] GUI app for scraper maintenance and command/control
-- [ ] cleanup
+- [ ] GUI app for scraper maintenance, command/control and remote work (turing tests, etc)
+- [ ] cleanup, conversion to async selectors
 - [ ] phantomjs engine (only because it's nearly ready)
 - [ ] chrome-browser-plugin engine
 - [ ] selenium engine
