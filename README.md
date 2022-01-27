@@ -184,23 +184,32 @@ You want to scrape the *state* of the DOM once the page is loaded, but if you us
 
 ```bash
 # fetch the full body of the form you are scraping and save it in page.hml
+```
+```bash
 auto fetch https://domain.com/path/ > page.html
 ```
 </p></details></td></tr>
 <!-- STEP 2 -->
 <tr><td><details><summary> 2) Target the form </summary><p>
+
 The first thing you might do against the HTML you've captured is pull all the forms out of the page, like this:
+
 ```bash
 # check the forms on the page
+```
+```bash
 auto xpath "//form" page.html
 ```
 </p></details></td></tr>
 <!-- STEP 3 -->
 <tr><td><details><summary> 3) Target the inputs </summary><p>
+
 Assuming you've identified the form name you are targeting as `my-form-name`, you then want to get all the inputs out of it with something like:
 
 ```bash
 # select all the inputs you need to populate from this form:
+```
+```bash
 auto xpath "//form[@name='my-form-name']//input|//form[@name='my-form-name']//select|//form[@name='my-form-name']//textarea" page.html
 ```
 </p></details></td></tr>
