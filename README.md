@@ -34,7 +34,7 @@ Here we're going to do a simple scrape of unprotected data on craiglist(you shou
 
 <table><tr><td colspan="3">
 
-`automaton` definitions can be used from the command line, from your own code *or* from a GUI (Soon™).
+`automaton` definitions can be used in whatever context they are needed: from the command line, your own code *or* from a GUI (Soon™).
 </td></tr><tr><td valign="top">
 <details><summary> In Code </summary><p>
 
@@ -231,11 +231,16 @@ From this you should be able to construct a primitive scrape definition(See the 
 
 Examples of building scrapers:
 
+- [Scraping Craiglist](docs/craigslist.md)
 - [Scraping Google](docs/google.md)
 - [Scraping Intellius](docs/intellius.md)
 
-Deployment
-----------
+Deploying a Scraper
+-------------------
+[TBD]
+
+Publishing a Definition
+-----------------------
 [TBD]
 
 Roadmap
