@@ -231,9 +231,9 @@ From this you should be able to construct a primitive scrape definition(See the 
 
 Examples of building scrapers:
 
-- [Scraping Craigslist](docs/craigslist.md)
-- [Scraping Google](docs/google.md)
-- [Scraping Intellius](docs/intellius.md)
+- [Scraping Craigslist](https://github.com/open-automaton/automaton/blob/master/docs/craigslist.md)
+- [Scraping Google](https://github.com/open-automaton/automaton/blob/master/docs/google.md)
+- [Scraping Intellius](https://github.com/open-automaton/automaton/blob/master/docs/intellius.md)
 
 Deploying a Scraper
 -------------------
