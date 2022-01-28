@@ -6,7 +6,7 @@ It uses an XML based DSL which both defines the scraping process as well as the 
 
 Usage
 -----
-Here we're going to do a simple scrape of unprotected data on craiglist(you should use their available RSS feed instead, but it serves as an excellent example for how to harvest results and works in all the engines):
+Here we're going to do a simple scrape of unprotected data on craigslist(you should use their available RSS feed instead, but it serves as an excellent example for how to harvest results and works in all the engines):
 
 ```xml
 <go url="https://sfbay.craigslist.org/search/apa">
