@@ -3,8 +3,6 @@ Scraping Craigslist
 
 Craiglist offers rss feeds of nearly every page on the site, so scraping is pointless, however their page structure is such that it makes for easy practice. So let's build an apartment scraper.
 
-the process of building a google scraper
-
 1. first fetch a copy of the search form page:
 ```bash
 auto fetch https://sfbay.craigslist.org/search/apa > search-form.html
