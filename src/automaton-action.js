@@ -93,6 +93,7 @@ Automaton.Action.prototype.subactionsWithAttributes = function(environment, call
 }
 Automaton.Action.prototype.subactions = function(environment, callback){
     if(this.parallel){
+        //TODO: test
         var count = 0;
         var results = {};
         this.eachChild(function(child){
@@ -100,6 +101,7 @@ Automaton.Action.prototype.subactions = function(environment, callback){
             child.act(environment, function(){
                 count--;
                 Object.keys(environment).forEach((key)=>{
+                    if(key === 'lastFetch') return;
                     results[key] = environment[key];
                 });
                 if(count == 0) callback(results);
@@ -115,6 +117,7 @@ Automaton.Action.prototype.subactions = function(environment, callback){
                 }
                 child.actWithAttributes(environment, function(res){
                     Object.keys(environment).forEach((key)=>{
+                        //if(key === 'lastFetch') return;
                         results[key] = environment[key];
                     });
                     emit();

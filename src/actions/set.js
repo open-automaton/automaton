@@ -12,6 +12,20 @@ let xPathFor = (selector)=>{
         default : return `//form[@name='${selector}']`
     }
 }
+let envSummary = (env)=>{
+    let summary = {};
+    Object.keys(env).forEach((key)=>{
+        let result = null;
+        switch(Array.isArray(env[key])?'array':(typeof env[key])){
+            case 'array': result = env[key].map((item)=> envSummary(item)); break;
+            case 'object': result = envSummary(env[key]); break;
+            case 'string' : result = env[key].substring(0, 200); break;
+            default : result = env[key];
+        }
+        if(result) summary[key] = result;
+    });
+    return summary;
+}
 
 Automaton.Actions.Set = AutomatonAction.extend({
     initialize : function(engine, options){
@@ -22,7 +36,11 @@ Automaton.Actions.Set = AutomatonAction.extend({
         AutomatonAction.prototype.initialize.call(this, engine, options);
     },
     act : function(environment, callback){
-        this.log(`start`, this.log.levels.DEBUG, this.options);
+        this.log(`start`, this.log.levels.DEBUG, envSummary(environment));
+        let logEnvAndReturn = (result)=>{
+            this.log('ENV', this.log.levels.DEBUG, envSummary(environment));
+            callback(result);
+        }
         var selection = null;
         if(this.options.variable && this.options.source){
             var value = environment[this.options.source];
@@ -51,7 +69,7 @@ Automaton.Actions.Set = AutomatonAction.extend({
                         if(results.length > 0 && this.hasChildren()){
                             environment[this.options.variable] = results;
                             environment['lastSelection'] = results;
-                            callback(results);
+                            logEnvAndReturn(results);
                         }else{
                             if(this.hasChildren()){
                                 environment[this.options.variable] = selection;
@@ -60,7 +78,7 @@ Automaton.Actions.Set = AutomatonAction.extend({
                             }
                             environment['lastSelection'] = selection;
                             let rtrn = environment[this.options.variable];
-                            callback(rtrn);
+                            logEnvAndReturn(rtrn);
                         }
                     }else{
                         if(!environment.forms){
@@ -85,9 +103,8 @@ Automaton.Actions.Set = AutomatonAction.extend({
                         ) || 'POST').toUpperCase();
                         environment.forms[this.options.form][this.options.target] =
                             environment[this.options.variable];
-                        callback(environment);
+                        logEnvAndReturn(environment);
                     }
-
                 }
             });
         }

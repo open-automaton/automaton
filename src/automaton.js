@@ -1,11 +1,6 @@
 
-var array = require('async-arrays');
-//
-//var art = require('AsciiArt');
-
-//webkit
-
-var HTMLParser = require('html-parser');
+const array = require('async-arrays');
+const HTMLParser = require('html-parser');
 
 Automaton = function(opts, engine){
     this.root = false;
@@ -61,7 +56,7 @@ Automaton.prototype.set = function(key, value){
 
 Automaton.prototype.run = function(callback){
     if(this.root) this.root.act(this.environment, function(environment){
-        callback(null, environment);
+        callback(null, environment['_emitted_']?environment['_emitted_']:environment);
     });
 }
 

@@ -6,27 +6,29 @@ It uses an XML based DSL which both defines the scraping process as well as the 
 
 Usage
 -----
-Here we're going to submit a form to whitepages.com (this definition is a few years old) and harvest the results:
+Here we're going to do a simple scrape of unprotected data on craiglist(you should use their available RSS feed instead, but it serves as an excellent example for how to harvest results and works in all the engines):
 
 ```xml
-<go url="http://www.whitepages.com/person">
-    <set form="findperson_basic" target="firstname" variable="first_name"></set>
-    <set form="findperson_basic" target="name" variable="last_name"></set>
-    <set form="findperson_basic" target="where" variable="city_state"></set>
-    <go form="findperson_basic">
-        <set xpath="//ul.speedbump_query_data" variable="matches">
-            <set xpath="//li.speedbump_query_info/div.name/a" variable="name"></set>
-            <set xpath="//li.speedbump_query_info/div.age/a" variable="age"></set>
-            <set xpath="//li.speedbump_query_info/div.location/a" variable="location"></set>
-        </set>
-        <set xpath="//div.pse_track" variable="corrections">
-            <set xpath="//li.basic_info/a.name" variable="name"></set>
-            <set xpath="//li.basic_info/div" variable="age"></set>
-            <set xpath="//li.location/strong" variable="location"></set>
-            <set xpath="//li.household" variable="household"></set>
-        </set>
-    </go>
-    <emit variables="matches,corrections"></emit>
+<go url="https://sfbay.craigslist.org/search/apa">
+    <set xpath="//li[@class='result-row']" variable="matches">
+        <set
+            xpath="//time[@class='result-date']/text()"
+            variable="time"
+        ></set>
+        <set
+            xpath="//span[@class='result-meta']/span[@class='result-price']/text()"
+            variable="price"
+        ></set>
+        <set
+            xpath="//span[@class='result-meta']/span[@class='housing']/text()"
+            variable="housing"
+        ></set>
+        <set
+            xpath="string(//img/@src)"
+            variable="link"
+        ></set>
+    </set>
+    <emit variables="matches"></emit>
 </go>
 ```
 
@@ -138,7 +140,7 @@ Some engines that use the browser will only submit using the form configuration 
 <!-- STEP 2 -->
 <tr><td><details><summary> set </summary><p>
 
-Either use a variable to set a target input on a form or set a variable using an [xpath](https://developer.mozilla.org/en-US/docs/Web/XPath) or [regex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+Either use a variable to set a target input on a form or set a variable using an [xpath](https://developer.mozilla.org/en-US/docs/Web/XPath) or [regex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions). Lists are extracted by putting `set`s inside another `set`
 
 ```xml
 <set
@@ -201,7 +203,7 @@ auto xpath "//form" page.html
 Assuming you've identified the form name you are targeting as `my-form-name`, you then want to get all the inputs out of it with something like:
 
 ```bash
-auto xpath "//form[@name='my-form-name']//input|//form[@name='my-form-name']//select|//form[@name='my-form-name']//textarea" page.html
+auto xpath-form-inputs "//form[@name='my-form-name']" page.html
 ```
 </p></details></td></tr>
 <!-- STEP 4 -->
