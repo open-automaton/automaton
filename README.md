@@ -4,7 +4,7 @@ A web scraping/[RPA](https://en.wikipedia.org/wiki/Robotic_process_automation) s
 
 Usage
 -----
-Here we're going to do a simple scrape of unprotected data on craigslist(you should use their available RSS feed instead, but it serves as an excellent example for how to harvest results and works in all the engines):
+Here we're going to do a simple scrape of unprotected data on craigslist(you should use their available [RSS feed](https://www.craigslist.org/about/rss) instead, but it serves as an excellent example for how to harvest results and works in all the engines):
 
 ```xml
 <go url="https://sfbay.craigslist.org/search/apa">
@@ -203,13 +203,31 @@ Assuming you've identified the form name you are targeting as `my-form-name`, yo
 ```bash
 auto xpath-form-inputs "//form[@name='my-form-name']" page.html
 ```
+
+Then you need to write selectors for the inputs that need to be set (all of them in the case of cheerio, but otherwise the browser abstraction usually handles those that are prefilled)
+
+```xml
+<set
+    form="<form-selector>"
+    target="<input-name>"
+    variable="<incoming-value-name>"
+></set>
+```
 </p></details></td></tr>
 <!-- STEP 4 -->
 <tr><td><details><summary> 4) Submit the filled form </summary><p>
+ you just need to target the form element with:
 
+ ```xml
+ <go form="<form-selector>">
+     <!-- extraction logic to go here -->
+ </go>
+ ```
 </p></details></td></tr>
 <!-- STEP 5 -->
 <tr><td><details><summary> 5) Save the form results url  </summary><p>
+
+Here you'll need to manually use your browser go to the submitted page and save the HTML by opening the inspector, then copying the HTML from the root element, then pasting it into a file.
 
 </p></details></td></tr>
 <!-- STEP 6 -->
@@ -223,6 +241,11 @@ auto xpath-form-inputs "//form[@name='my-form-name']" page.html
 
 <tr><td>
 From this you should be able to construct a primitive scrape definition(See the examples below for more concrete instruction). Once you have this definition you can do sample scrapes with:
+
+```bash
+auto scrape my-definition.auto.xml --data '{"JSON":"to","scrape":"with"}'
+#data still TODO on CLI, but already working in the API call options
+```
 </td></tr>
 
 </table>
