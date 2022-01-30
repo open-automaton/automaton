@@ -16,11 +16,11 @@ Here we're going to do a simple scrape of unprotected data on craigslist(you sho
             variable="time"
         ></set>
         <set
-            xpath="//span[@class='result-meta']/span[@class='result-price']/text()"
+            xpath="//span[@class='result-price']/text()"
             variable="price"
         ></set>
         <set
-            xpath="//span[@class='result-meta']/span[@class='housing']/text()"
+            xpath="//span[@class='housing']/text()"
             variable="housing"
         ></set>
         <set
