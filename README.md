@@ -288,7 +288,7 @@ Once you settle on a selector for the correct element add a selector in the defi
 </set>
 ```
 
-To target the output simple emit the variables you want, otherwise it will dump everything in the environment.
+To target the output emit the variables you want, otherwise it will dump everything in the environment.
 
 </p></details></td></tr>
 
