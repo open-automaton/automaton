@@ -1,6 +1,6 @@
 @open-automaton/automaton
 =========================
-<img align="left" src="docs/automaton.png">
+<img align="left" src="https://github.com/open-automaton/automaton/raw/master/docs/automaton.png">
 
 A web scraping/[RPA](https://en.wikipedia.org/wiki/Robotic_process_automation) solution for ease of use, maintenance and (soon™) deployment. It uses an [XML](https://en.wikipedia.org/wiki/XML) based [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) which both defines the scraping process as well as the structure of the returned data. It compares favorably to [uipath](https://www.uipath.com/learning/video-tutorials/workflow-automation-uipath-studio), [Blue Prism ALM](https://bpdocs.blueprism.com/hub-interact/4-3/en-us/alm/alm-process-definitions.htm?tocpath=Plugins%20and%20Tools%7CAutomation%20Lifecycle%20Management%20(ALM)%7CALM%20%E2%80%93%20Process%20definitions%7C_____0), [Kapow(Now Kofax RPA)](https://www.kofax.com/products/rpa) and [apify](https://sdk.apify.com/). These solutions make the work of building and maintaining scrapers infinitely easier than directly using a primary scraping solution(like [playwright](https://playwright.dev/), [puppeteer](https://github.com/puppeteer/puppeteer), [jsdom](https://github.com/jsdom/jsdom), [cheerio](https://www.npmjs.com/package/cheerio), [selenium](https://www.selenium.dev/), [windmill](https://getwindmill.com/), [beautifulsoup](https://pypi.org/project/beautifulsoup4/) or others).
 
@@ -55,32 +55,44 @@ const Automaton = require('@open-automaton/automaton');
 
 - **Cheerio**
     ```js
-    const MiningEngine = require('@open-automaton/cheerio-mining-engine');
+    const MiningEngine = require(
+        '@open-automaton/cheerio-mining-engine'
+    );
     let myEngine = new MiningEngine();
     ```
 - **Puppeteer**
     ```js
-    const Engine = require('@open-automaton/puppeteer-mining-engine');
+    const Engine = require(
+        '@open-automaton/puppeteer-mining-engine'
+    );
     let myEngine = new MiningEngine();
     ```
 - **Playwright: Chromium**
     ```js
-    const Engine = require('@open-automaton/playwright-mining-engine');
+    const Engine = require(
+        '@open-automaton/playwright-mining-engine'
+    );
     let myEngine = new MiningEngine({type:'chromium'});
     ```
 - **Playwright: Firefox**
     ```js
-    const Engine = require('@open-automaton/playwright-mining-engine');
+    const Engine = require(
+        '@open-automaton/playwright-mining-engine'
+    );
     let myEngine = new MiningEngine({type:'firefox'});
     ```
 - **Playwright: Webkit**
     ```js
-    const Engine = require('@open-automaton/playwright-mining-engine');
+    const Engine = require(
+        '@open-automaton/playwright-mining-engine'
+    );
     let myEngine = new MiningEngine({type:'webkit'});
     ```
 - **JSDom**
     ```js
-    const Engine = require('@open-automaton/jsdom-mining-engine');
+    const Engine = require(
+        '@open-automaton/jsdom-mining-engine'
+    );
     let myEngine = new MiningEngine();
     ```
 
@@ -89,7 +101,10 @@ const Automaton = require('@open-automaton/automaton');
 <tr><td><details><summary> Last you need to do the scrape(in an `async` function) </summary><p>
 
 ```js
-let results = await Automaton.scrape('definition.xml', myEngine);
+let results = await Automaton.scrape(
+    'definition.xml',
+    myEngine
+);
 ```
 That's all it takes, if you need a [different usage pattern](docs/detailed-usage.md) that is supported as well.
 
@@ -235,11 +250,45 @@ Here you'll need to manually use your browser go to the submitted page and save 
 
 </p></details></td></tr>
 <!-- STEP 6 -->
+
+
 <tr><td><details><summary> 6) Save result set groups </summary><p>
+
+Now we need to looks for rows with something like:
+
+```bash
+auto xpath "//ul|//ol|//tbody" page.html
+```
+Once you settle on a selector for the correct element add a selector in the definition:
+
+```xml
+<set xpath="<xpath-selector>" variable="matches">
+    <!--more selected fields here -->
+</set>
+```
 
 </p></details></td></tr>
 <!-- STEP 7 -->
 <tr><td><details><summary> 7) Save result set fields </summary><p>
+
+Last we need to looks for individual fields using something like:
+
+```bash
+auto xpath "//li|//tr" page_fragment.html
+```
+Once you settle on a selector for the correct element add a selector in the definition:
+
+```xml
+<set xpath="<xpath-selector>" variable="matches">
+    <set
+        xpath="<xpath-selector>"
+        variable="<field-name>"
+    ></set>
+    <!--more selected fields here -->
+</set>
+```
+
+To target the output simple emit the variables you want, otherwise it will dump everything in the environment.
 
 </p></details></td></tr>
 
