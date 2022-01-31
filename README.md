@@ -4,6 +4,8 @@
 
 A web scraping/[RPA](https://en.wikipedia.org/wiki/Robotic_process_automation) solution for ease of use, maintenance and (soon™) deployment. It uses an [XML](https://en.wikipedia.org/wiki/XML) based [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) which both defines the scraping process as well as the structure of the returned data. It compares favorably to [uipath](https://www.uipath.com/learning/video-tutorials/workflow-automation-uipath-studio), [Blue Prism ALM](https://bpdocs.blueprism.com/hub-interact/4-3/en-us/alm/alm-process-definitions.htm?tocpath=Plugins%20and%20Tools%7CAutomation%20Lifecycle%20Management%20(ALM)%7CALM%20%E2%80%93%20Process%20definitions%7C_____0), [Kapow(Now Kofax RPA)](https://www.kofax.com/products/rpa) and [apify](https://sdk.apify.com/). These solutions make the work of building and maintaining scrapers infinitely easier than directly using a primary scraping solution(like [playwright](https://playwright.dev/), [puppeteer](https://github.com/puppeteer/puppeteer), [jsdom](https://github.com/jsdom/jsdom), [cheerio](https://www.npmjs.com/package/cheerio), [selenium](https://www.selenium.dev/), [windmill](https://getwindmill.com/), [beautifulsoup](https://pypi.org/project/beautifulsoup4/) or others).
 
+<br><br>
+
 Usage
 -----
 Here we're going to do a simple scrape of unprotected data on craigslist(you should use their available [RSS feed](https://www.craigslist.org/about/rss) instead, but it serves as an excellent example for how to harvest results and works in all the engines):
