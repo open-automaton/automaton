@@ -301,6 +301,17 @@ auto scrape my-definition.auto.xml --data '{"JSON":"to","scrape":"with"}'
 ```
 </td></tr>
 
+<!-- STEP 8 -->
+<tr><td><details><summary> 8 - ∞) Wait, it's suddenly broken!! </summary><p>
+
+The most frustrating thing about scrapers is, because they are tied to the structural representation of the presentation, which is designed to change, scrapers will inevitably break. While this is frustrating using the provided tools on fresh fetches of the pages in question. Usually:
+
+1. The url has changed, requiring an update to the definition,
+2. The page structure has changed requiring 1 or more selectors to be rewritten,
+3. The page has changed their delivery architecture, requiring you to use a more expensive engine (computationally).
+
+</p></details></td></tr>
+
 </table>
 
 Examples of building scrapers:
