@@ -308,7 +308,7 @@ The most frustrating thing about scrapers is, because they are tied to the struc
 
 1. The url has changed, requiring an update to the definition,
 2. The page structure has changed requiring 1 or more selectors to be rewritten,
-3. The page has changed their delivery architecture, requiring you to use a more expensive engine (computationally).
+3. The page has changed their delivery architecture, requiring you to use a more expensive engine (computationally: cheerio < jsdom < puppeteer, playwright).
 
 </p></details></td></tr>
 
