@@ -304,7 +304,7 @@ auto scrape my-definition.auto.xml --data '{"JSON":"to","scrape":"with"}'
 <!-- STEP 8 -->
 <tr><td><details><summary> 8 - ∞) Wait, it's suddenly broken!! </summary><p>
 
-The most frustrating thing about scrapers is, because they are tied to the structural representation of the presentation, which is designed to change, scrapers will inevitably break. While this is frustrating using the provided tools on fresh fetches of the pages in question. Usually:
+The most frustrating thing about scrapers is, because they are tied to the structural representation of the presentation, which is designed to change, scrapers will inevitably break. While this is frustrating, using the provided tools on fresh fetches of the pages in question will quickly highlight what's failing. Usually:
 
 1. The url has changed, requiring an update to the definition,
 2. The page structure has changed requiring 1 or more selectors to be rewritten,
@@ -324,9 +324,64 @@ Deploying a Scraper
 -------------------
 [TBD]
 
-Publishing a Definition
+Publishing a Definition (Soon™)
 -----------------------
-[TBD]
+First, create a directory something that describes the site we're fetching, the work we're doing and ends with `.auto`, let's call this one `some-site-register.auto`
+
+Once in the directory let's run
+```bash
+auto init ../some/path/some-site-register.auto
+```
+If a definition is not provided, a blank one will be initialized, and publishing is the standard:
+
+```bash
+npm publish
+```
+
+you'll need to import the engine you want to use by default:
+
+```bash
+# we are choosing to default to JSDOM
+npm install @open-automaton/jsdom-mining-engine
+```
+then add an entry to `package.json` for the default engine
+
+```json
+{
+    "defaultAutomatonEngine" : "@open-automaton/jsdom-mining-engine"
+}
+```
+
+you can now run tests with
+
+```bash
+npm run test
+```
+you can run your definition with
+```bash
+npm run scrape '{"JSON":"data"}'
+```
+If your scraper runs and your tests pass, now would be a good time to update the README to describe your incoming data requirements and publish.
+
+you can reference the definition directly (in parent projects) at:
+
+```js
+path.merge(
+    require.resolve('some-site-register.auto'),
+    'src',
+    'some-site-register.auto.xml'
+)
+// ./node_modules/some-site-register.auto/src/some-site-register.auto.xml
+```
+
+The top level `Automaton.scrape()` function knows how to transform `some-site-register.auto` into that, so you can just use the shorthand there.
+
+You can include your scraper(once published) with:
+```js
+let MyScraper = require('some-site-register.auto');
+MyScraper.scrape(automatonEngine);
+// or MyScraper.scrape(); to use the default engine
+```
 
 Roadmap
 -------
@@ -338,6 +393,7 @@ Roadmap
 - [x] emit action
 - [x] command-line app
 - [x] attributes: until-exists, timeout, delay
+- [ ] publishing tools in CLI
 - [ ] support images in select
 - [ ] proxy support
 - [ ] robots.txt
