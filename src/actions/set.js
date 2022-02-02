@@ -2,12 +2,13 @@ let AutomatonAction = require('../automaton-action');
 const DOM = require('../dom-tool').DOM;
 const Arrays = require('async-arrays');
 const libxmljs = require("libxmljs");
+const carlton = require('carlton');
 
 let Automaton = { Actions:{} };
 
 let xPathFor = (selector)=>{
     switch(selector[0]){
-        case '/' : return this.options.form;
+        case '/' : return selector;
         case '@' : return `//form[${selector}]`
         default : return `//form[@name='${selector}']`
     }
@@ -27,6 +28,7 @@ let envSummary = (env)=>{
     return summary;
 }
 
+
 Automaton.Actions.Set = AutomatonAction.extend({
     initialize : function(engine, options){
         this.name = 'set';
@@ -36,19 +38,20 @@ Automaton.Actions.Set = AutomatonAction.extend({
         AutomatonAction.prototype.initialize.call(this, engine, options);
     },
     act : function(environment, callback){
+        let options = carlton(this.options, environment);
         this.log(`start`, this.log.levels.DEBUG, envSummary(environment));
         let logEnvAndReturn = (result)=>{
             this.log('ENV', this.log.levels.DEBUG, envSummary(environment));
             callback(result);
         }
         var selection = null;
-        if(this.options.variable && this.options.source){
-            var value = environment[this.options.source];
-            if(this.options.regex){
-                selection = DOM.regexText(this.options.regex, value);
+        if(options.variable && options.source){
+            var value = environment[options.source];
+            if(options.regex){
+                selection = DOM.regexText(options.regex, value);
             }
-            if(this.options.xpath){
-                selection = DOM.xpathText(this.options.xpath, value);
+            if(options.xpath){
+                selection = DOM.xpathText(options.xpath, value);
             }
             var results = [];
             Arrays.forEachEmission((selection || []), (item, key, done)=>{
@@ -64,36 +67,36 @@ Automaton.Actions.Set = AutomatonAction.extend({
                     done();
                 });
             }, ()=>{
-                if(this.options.variable){
+                if(options.variable){
                     if(results.length !== 0 || selection){
                         if(results.length > 0 && this.hasChildren()){
-                            environment[this.options.variable] = results;
+                            environment[options.variable] = results;
                             environment['lastSelection'] = results;
                             logEnvAndReturn(results);
                         }else{
                             if(this.hasChildren()){
-                                environment[this.options.variable] = selection;
+                                environment[options.variable] = selection;
                             }else{
-                                environment[this.options.variable] = selection[0];
+                                environment[options.variable] = selection[0];
                             }
                             environment['lastSelection'] = selection;
-                            let rtrn = environment[this.options.variable];
+                            let rtrn = environment[options.variable];
                             logEnvAndReturn(rtrn);
                         }
                     }else{
                         if(!environment.forms){
                             environment.forms = {};
                         }
-                        if(!environment.forms[this.options.form] ){
-                            environment.forms[this.options.form]  = {};
+                        if(!environment.forms[options.form] ){
+                            environment.forms[options.form]  = {};
                         }
-                        let formSelector = xPathFor(this.options.form);
+                        let formSelector = xPathFor(options.form);
                         var xmlDoc = libxmljs.parseHtmlString(value);
                         let formSelection = xmlDoc.find(formSelector)[0];
                         let input = null;
                         let action = 'GET';
                         if(selection){
-                            input = formSelection.find(xPathFor(this.options.target))[0];
+                            input = formSelection.find(xPathFor(options.target))[0];
                             action = formSelection.attr('action') && formSelection.attr('action').value();
                         }
                         let method = ((
@@ -101,8 +104,8 @@ Automaton.Actions.Set = AutomatonAction.extend({
                             formSelection.attr('method') &&
                             formSelection.attr('method').value()
                         ) || 'POST').toUpperCase();
-                        environment.forms[this.options.form][this.options.target] =
-                            environment[this.options.variable];
+                        environment.forms[options.form][options.target] =
+                            environment[options.variable];
                         logEnvAndReturn(environment);
                     }
                 }

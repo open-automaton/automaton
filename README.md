@@ -106,7 +106,7 @@ let results = await Automaton.scrape(
     myEngine
 );
 ```
-That's all it takes, if you need a [different usage pattern](docs/detailed-usage.md) that is supported as well.
+That's all it takes, if you need a [different usage pattern](https://github.com/open-automaton/automaton/blob/master/docs/detailed-usage.md) that is supported as well.
 
 </p></details></td></tr>
 
@@ -326,7 +326,7 @@ Deploying a Scraper
 
 Publishing a Definition (Soon™)
 -----------------------
-First, create a directory something that describes the site we're fetching, the work we're doing and ends with `.auto`, let's call this one `some-site-register.auto`
+First, create a directory that describes the site we're fetching, the work we're doing and ends with `.auto`, let's call this one `some-site-register.auto`
 
 Once in the directory let's run
 ```bash
@@ -383,30 +383,12 @@ MyScraper.scrape(automatonEngine);
 // or MyScraper.scrape(); to use the default engine
 ```
 
-Roadmap
--------
+About Automaton
+---------------
 
-- [x] remove engines from core lib
-- [x] puppeteer engine
-- [x] playwright engine
-- [x] jsdom engine
-- [x] emit action
-- [x] command-line app
-- [x] attributes: until-exists, timeout, delay
-- [ ] publishing tools in CLI
-- [ ] support images in select
-- [ ] proxy support
-- [ ] robots.txt
-- [ ] strip-mine (work clustering)
-- [ ] monitoring
-- [ ] GUI app for scraper maintenance, command/control and remote work (turing tests, etc)
-- [ ] cleanup, conversion to async selectors
-- [ ] phantomjs engine (only because it's nearly ready)
-- [ ] chrome-browser-plugin engine
-- [ ] selenium engine
-- [ ] other languages (PHP, Java, Rust... )
+View the development [roadmap](https://github.com/open-automaton/automaton/blob/master/docs/roadmap.md).
 
-[Where did this come from?](docs/history.md)
+Read a little about where this [came from](https://github.com/open-automaton/automaton/blob/master/docs/history.md).
 
 Testing
 -------

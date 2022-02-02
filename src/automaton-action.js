@@ -2,6 +2,7 @@ const makeMergedCopyAndExtendify = require('./extendify');
 const Emitter = require('extended-emitter');
 const Arrays = require('async-arrays');
 const log = require('simple-log-function');
+const carlton = require('carlton');
 
 let Automaton = {};
 
@@ -49,7 +50,6 @@ const timeoutByUnit = (value)=>{
     let trimmed = value.trim();
     let number = parseInt(value);
     let unit = trimmed.substring(number.toString().length).trim().toLowerCase();
-    console.log(number, unit);
     switch(unit){
         case 's':
         case 'seconds':
@@ -64,11 +64,12 @@ const timeoutByUnit = (value)=>{
 Automaton.Action.prototype.subactionsWithAttributes = function(environment, callback){
     let timedout = false;
     let terminated = true;
+    let options = carlton(this.options, environment);
     let intervalLength = 3000; //every 3 seconds
-    if(this.options['until-exists']){
+    if(options['until-exists']){
         let interval = setInterval(()=>{
             let results = DOM.xpath(
-                this.options['until-exists'],
+                options['until-exists'],
                 environment.lastFetch
             );
             if(results && results.length && !timedout){
@@ -81,8 +82,8 @@ Automaton.Action.prototype.subactionsWithAttributes = function(environment, call
     }
     //todo: make this start from fetch, not return
     let start = Date.now();
-    if(this.options.timeout){
-        let timeInMillis = timeoutByUnit(this.options.timeout);
+    if(options.timeout){
+        let timeInMillis = timeoutByUnit(options.timeout);
         let interval = setInterval(()=>{
             if(terminated) return clearInterval(interval);
             if( (Date.now()-start) >= timeInMillis){
@@ -137,97 +138,13 @@ Automaton.Action.prototype.act = function(environment, callback){
 
 Automaton.Action.log = log;
 
-/*Automaton.Action.log = {};
-Automaton.Action.log.levels = log.levels;
-let level = log.levels.ERROR;
-Automaton.Action.log.mode = 'text';
-Object.defineProperty(Automaton.Action.log, 'level', {
-    get: function(){
-        return level;
-    },
-    set: function(newValue){
-        if(Object.values(
-            Automaton.Action.log.levels
-        ).indexOf(newValue) === -1) throw new Error(
-            'Unknown Value: '+newValue
-        );
-        log.setDefaultLevel(newValue);
-        level = newValue;
-    },
-    enumerable: true,
-    configurable: true
-});
-
-function callerFile(depth) {
-    let originalFunc = Error.prepareStackTrace;
-    let callerfile;
-    let depth = depth || 1;
-    let pos = 0;
-    try {
-        let err = new Error();
-        let currentfile;
-        Error.prepareStackTrace = function(err, stack){ return stack; };
-        currentfile = err.stack.shift().getFileName();
-        while (err.stack.length && pos < depth) {
-            callerfile = err.stack.shift().getFileName();
-            if(currentfile !== callerfile){
-                pos++;
-                callerfile = currentfile;
-                if(pos <= depth){
-                    break;
-                }
-            }
-        }
-    } catch(e){}
-    Error.prepareStackTrace = originalFunc;
-    return callerfile;
-}
-
-makeHeader = (file)=>{
-    return `[ACTION: ${file.split('/').pop().split('.').shift().toUpperCase()}] `
-}
-
-Automaton.Action.prototype.log = function(message, level, data){
-    if(level > log.getLevel()) return; //do nothing if we're out of range
-    let logData = data || {level, message};
-    let outBoundMessage = null;
-    switch(Automaton.Action.log.mode){
-        case 'json' :
-            outBoundMessage = JSON.stringify(logData);
-            break;
-        case 'text' :
-        default :
-            outBoundMessage = makeHeader(callerFile()) + message + (
-                data? '  '+JSON.stringify(data):''
-            );
-            break;
-    }
-    if(outBoundMessage) switch(level){
-        case log.levels.TRACE :
-            log.trace(outBoundMessage)
-            break;
-        case log.levels.WARN :
-            log.warn(outBoundMessage)
-            break;
-        case log.levels.ERROR :
-            log.error(outBoundMessage)
-            break;
-        case log.levels.INFO :
-            log.info(outBoundMessage)
-            break;
-        case log.levels.DEBUG :
-        default :
-            log.debug(outBoundMessage)
-            break;
-    }
-};*/
-
 Automaton.Action.prototype.actWithAttributes = function(environment, callback){
-    if(this.options.delay){
-        let parts = this.options.delay.split('-').map((s)=>s.trim());
+    let options = carlton(this.options, environment);
+    if(options.delay){
+        let parts = options.delay.split('-').map((s)=>s.trim());
         let bottom = timeoutByUnit(parts[0]);
         let top = timeoutByUnit(parts[0] || parts[1]);
-        let timeout = Math.floor(Math.random() * (top-bottom));
+        let timeout = bottom + Math.floor(Math.random() * (top-bottom));
         return setTimeout(()=>{
             this.act(environment, callback);
         }, timeout)

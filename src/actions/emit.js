@@ -1,5 +1,6 @@
 const AutomatonAction = require('../automaton-action');
 const request = require('postman-request');
+const carlton = require('carlton');
 
 let Automaton = { Actions:{} };
 
@@ -11,19 +12,20 @@ Automaton.Actions.Emit = AutomatonAction.extend({
         AutomatonAction.prototype.initialize.call(this, engine, options);
     },
     act : function(environment, callback){
+        let options = carlton(this.options, environment);
         this.log(`start`, this.log.levels.DEBUG, this.options);
-        if(this.options.variables){
+        if(options.variables){
             if(!environment['_emitted_']) environment['_emitted_'] = {};
-            let varNames = this.options.variables.split(',').map((s)=> s.trim());
+            let varNames = options.variables.split(',').map((s)=> s.trim());
             varNames.forEach((varName)=>{
                 if(environment[varName]){
                     environment['_emitted_'][varName] = environment[varName];
                 }
             })
         }
-        if(this.options.remote){
+        if(options.remote){
             request({
-                uri : this.options.remote,
+                uri : options.remote,
                 method : 'POST',
                 data : JSON.stringify(environment['_emitted_'])
             }, (err, req, body)=>{
