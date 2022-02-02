@@ -81,16 +81,6 @@ Automaton.Action.prototype.subactionsWithAttributes = function(environment, call
         this.subactions(environment, callback)
     }
     //todo: make this start from fetch, not return
-    let start = Date.now();
-    if(options.timeout){
-        let timeInMillis = timeoutByUnit(options.timeout);
-        let interval = setInterval(()=>{
-            if(terminated) return clearInterval(interval);
-            if( (Date.now()-start) >= timeInMillis){
-                timedout = true;
-            }
-        }, intervalLength);
-    }
 }
 Automaton.Action.prototype.subactions = function(environment, callback){
     if(this.parallel){
@@ -99,7 +89,7 @@ Automaton.Action.prototype.subactions = function(environment, callback){
         var results = {};
         this.eachChild(function(child){
             count++;
-            child.act(environment, function(){
+            child.actWithAttributes(environment, function(){
                 count--;
                 Object.keys(environment).forEach((key)=>{
                     if(key === 'lastFetch') return;
@@ -140,16 +130,35 @@ Automaton.Action.log = log;
 
 Automaton.Action.prototype.actWithAttributes = function(environment, callback){
     let options = carlton(this.options, environment);
+    let timedout = false;
+    let terminated = false;
+    let start = Date.now();
+    let cb = callback;
+    if(options.timeout){
+        let timeInMillis = timeoutByUnit(options.timeout);
+        let interval = setInterval(()=>{
+            if( (Date.now()-start) >= timeInMillis){
+                timedout = true;
+                environment.timedout = true;
+                terminated = true;
+                cb(null, new Error('Action timed out'));
+            }
+            if(terminated) return clearInterval(interval);
+        }, timeInMillis/10);
+    }
     if(options.delay){
         let parts = options.delay.split('-').map((s)=>s.trim());
         let bottom = timeoutByUnit(parts[0]);
         let top = timeoutByUnit(parts[0] || parts[1]);
         let timeout = bottom + Math.floor(Math.random() * (top-bottom));
         return setTimeout(()=>{
-            this.act(environment, callback);
+            if(!timedout){
+                terminated = true;
+                this.act(environment, cb);
+            }
         }, timeout)
     }else{
-        this.act(environment, callback);
+        this.act(environment, cb);
     }
 };
 

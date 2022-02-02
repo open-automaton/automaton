@@ -34,6 +34,11 @@ describe('Automaton', function(){
             this.timeout(5000);
             canonical.testDelayAttribute(cheerioEngine, done);
         });
+
+        it('runs with a timeout', function(done){
+            this.timeout(6000);
+            canonical.testTimeoutAttribute(cheerioEngine, done);
+        });
     });
 
     //TODO: make all test runnable as a suite, with clean termination
@@ -55,6 +60,11 @@ describe('Automaton', function(){
         it('runs with a delay', function(done){
             this.timeout(10000);
             canonical.testDelayAttribute(puppeteerEngine, done);
+        });
+
+        it('runs with a timeout', function(done){
+            this.timeout(10000);
+            canonical.testTimeoutAttribute(puppeteerEngine, done);
         });
 
         after(function(done){

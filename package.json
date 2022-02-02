@@ -23,7 +23,7 @@
         "url": "git@github.com:open-automaton/automaton.git"
     },
     "dependencies": {
-        "@open-automaton/automaton-engine": "0.0.8",
+        "@open-automaton/automaton-engine": "0.0.9",
         "async-arrays": "^1.0.1",
         "browser": "^0.2.6",
         "carlton": "0.0.1",

@@ -55,7 +55,8 @@ Automaton.prototype.set = function(key, value){
 }
 
 Automaton.prototype.run = function(callback){
-    if(this.root) this.root.actWithAttributes(this.environment, function(environment){
+    if(this.root) this.root.actWithAttributes(this.environment, function(environment, error){
+        if(error) return callback(error);
         callback(null, environment['_emitted_']?environment['_emitted_']:environment);
     });
 }

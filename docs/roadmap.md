@@ -12,7 +12,7 @@ Automaton Roadmap
 - [x] emit action
 - [x] command-line app
 - [x] attributes: until-exists, timeout, delay
-- [ ] `es6-template-strings` support in attrs
+- [x] `es6-template-strings` support in attrs
 - [ ] publishing tools in CLI
 - [ ] support images in select
 - [ ] proxy support
