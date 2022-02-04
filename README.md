@@ -379,12 +379,13 @@ Before publishing, please consider updating the README to describe your incoming
 <!-- Feature Description -->
 <tr><td><p>
 
-<h3>Features<h3>
+### Features
 
 ```bash
 npm run test
 ```
 you can run your definition with
+
 ```bash
 npm run scrape '{"JSON":"data"}'
 ```
