@@ -326,17 +326,26 @@ Deploying a Scraper
 
 Publishing a Definition (Soon™)
 -----------------------
-First, create a directory that describes the site we're fetching, the work we're doing and ends with `.auto`, let's call this one `some-site-register.auto`
+First, create a directory that describes the site we're fetching, the work we're doing and ends with `.auto`, let's call this one `some-site-register.auto`. Once created, let's go into that directory.
+
+<table>
+
+<tr><td><p>
+    Automaton definitions are published as useable [nodejs]() [npm]() modules, though making and maintaining them does not **require** any javascript. You'll need your own npm credentials to publish.
+</p></td></tr>
+<!-- STEP 1 -->
+<tr><td><details><summary> 1) Create the repository </summary><p>
 
 Once in the directory let's run
 ```bash
 auto init ../some/path/some-site-register.auto
 ```
-If a definition is not provided, a blank one will be initialized, and publishing is the standard:
+If a definition is not provided, a blank one will be initialized
 
-```bash
-npm publish
-```
+</p></details></td></tr>
+
+<!-- STEP 2 -->
+<tr><td><details><summary> 2) Configure the repository </summary><p>
 
 you'll need to import the engine you want to use by default:
 
@@ -352,7 +361,25 @@ then add an entry to `package.json` for the default engine
 }
 ```
 
-you can now run tests with
+</p></details></td></tr>
+
+<!-- STEP 3 -->
+<tr><td><details><summary> 3) Publish the repository </summary><p>
+
+publishing is the standard:
+
+```bash
+npm publish
+```
+
+Before publishing, please consider updating the README to describe your incoming data requirements.
+
+</p></details></td></tr>
+
+<!-- Feature Description -->
+<tr><td><details><p>
+
+<h3>Features<h3>
 
 ```bash
 npm run test
@@ -361,9 +388,18 @@ you can run your definition with
 ```bash
 npm run scrape '{"JSON":"data"}'
 ```
-If your scraper runs and your tests pass, now would be a good time to update the README to describe your incoming data requirements and publish.
+
+</p></details></td></tr>
+
+<details><summary> Definition Path </summary><p>
 
 you can reference the definition directly (in parent projects) at:
+
+```js
+let xmlPath = require('some-site-register.auto').xml;
+```
+
+which is short for:
 
 ```js
 path.merge(
@@ -375,6 +411,8 @@ path.merge(
 ```
 
 The top level `Automaton.scrape()` function knows how to transform `some-site-register.auto` into that, so you can just use the shorthand there.
+
+</p></details>
 
 You can include your scraper(once published) with:
 ```js
