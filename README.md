@@ -377,7 +377,7 @@ Before publishing, please consider updating the README to describe your incoming
 </p></details></td></tr>
 
 <!-- Feature Description -->
-<tr><td><details><p>
+<tr><td><p>
 
 <h3>Features<h3>
 
@@ -389,7 +389,7 @@ you can run your definition with
 npm run scrape '{"JSON":"data"}'
 ```
 
-</p></details></td></tr>
+</p></td></tr>
 
 </table>
 
