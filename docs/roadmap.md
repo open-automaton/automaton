@@ -12,6 +12,9 @@ Automaton Roadmap
 - [x] emit action
 - [x] command-line app
 - [x] attributes: until-exists, timeout, delay
+    - [x] tested: delay
+    - [x] tested: timeout
+    - [ ] tested: until-exists
 - [x] `es6-template-strings` support in attrs
 - [ ] publishing tools in CLI
 - [ ] support images in select
@@ -25,6 +28,7 @@ Automaton Roadmap
 
 -------------------------------------------------------------------------------
 - [ ] cleanup, conversion to async selectors
+- [ ] new action for subscraping
 - [ ] add CLI plugin features to support using published definitions
 - [ ] GUI search + publishing UI
 

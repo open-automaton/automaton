@@ -254,7 +254,7 @@ Here you'll need to manually use your browser go to the submitted page and save 
 
 <tr><td><details><summary> 6) Save result set groups </summary><p>
 
-Now we need to looks for rows with something like:
+Now we need to look for rows with something like:
 
 ```bash
 auto xpath "//ul|//ol|//tbody" page.html
