@@ -391,6 +391,8 @@ npm run scrape '{"JSON":"data"}'
 
 </p></details></td></tr>
 
+</table>
+
 <details><summary> Definition Path </summary><p>
 
 you can reference the definition directly (in parent projects) at:
