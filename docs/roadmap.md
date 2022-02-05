@@ -31,6 +31,7 @@ Automaton Roadmap
 - [ ] new action for subscraping
 - [ ] add CLI plugin features to support using published definitions
 - [ ] GUI search + publishing UI
+- [ ] pages for GUI, `auto` and `automaton`
 
 ## 1.0
 
