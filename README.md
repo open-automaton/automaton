@@ -331,7 +331,9 @@ First, create a directory that describes the site we're fetching, the work we're
 <table>
 
 <tr><td><p>
-    Automaton definitions are published as useable [nodejs](https://nodejs.org/en/) [npm](https://npmjs.com/) modules, though making and maintaining them does not <b>require</b> any javascript. You'll need your own npm credentials to publish.
+
+    Automaton definitions are published as useable [nodejs](https://nodejs.org/en/) [npm](https://npmjs.com/) modules, though making and maintaining them does not **require** any javascript. You'll need your own npm credentials to publish.
+
 </p></td></tr>
 <!-- STEP 1 -->
 <tr><td><details><summary> 1) Create the repository </summary><p>
