@@ -379,11 +379,16 @@ Before publishing, please consider updating the README to describe your incoming
 <!-- Feature Description -->
 <tr><td><p>
 
-### Features
+Once it's all set up, you have a bunch of features, out of the box.
+
+### Testing
 
 ```bash
 npm run test
 ```
+
+### Scraping
+
 you can run your definition with
 
 ```bash
