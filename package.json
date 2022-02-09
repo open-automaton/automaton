@@ -1,16 +1,17 @@
 {
     "name": "@open-automaton/automaton",
     "homepage": "https://github.com/open-automaton/automaton",
-    "version": "0.0.11",
+    "version": "0.0.12",
     "main": "src/automaton.js",
     "description": "A scraping DSL and runtime",
     "keywords": [
         "scraping",
         "webscraping",
-        "datamining"
+        "datamining",
+        "rpa"
     ],
     "scripts": {
-        "test": "./node_modules/mocha/bin/mocha -t 10000"
+        "test": "./node_modules/mocha/bin/mocha"
     },
     "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
     "contributors": [],
@@ -25,11 +26,8 @@
     "dependencies": {
         "@open-automaton/automaton-engine": "0.0.9",
         "async-arrays": "^1.0.1",
-        "browser": "^0.2.6",
         "carlton": "0.0.1",
-        "child_process": "*",
         "clone": "^2.1.2",
-        "es6-template-strings": "^2.0.1",
         "extended-emitter": "^1.1.0",
         "html-parser": "^0.11.0",
         "libxmljs": "^0.19.7",

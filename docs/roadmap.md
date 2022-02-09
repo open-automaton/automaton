@@ -3,8 +3,6 @@ Automaton Roadmap
 
 ## Alpha
 
--------------------------------------------------------------------------------
-
 - [x] remove engines from core lib
 - [x] puppeteer engine
 - [x] playwright engine
@@ -26,16 +24,15 @@ Automaton Roadmap
 
 ## Beta
 
--------------------------------------------------------------------------------
 - [ ] cleanup, conversion to async selectors
 - [ ] new action for subscraping
 - [ ] add CLI plugin features to support using published definitions
 - [ ] GUI search + publishing UI
 - [ ] pages for GUI, `auto` and `automaton`
+- [ ] jsdoc for typescript support
 
 ## 1.0
 
--------------------------------------------------------------------------------
 - [ ] interactive browser definition builder
 - [ ] phantomjs engine (only because it's nearly ready)
 - [ ] chrome-browser-plugin engine
@@ -43,3 +40,4 @@ Automaton Roadmap
 - [ ] `automaton-engine` support for other languages (PHP, Java, Rust... )
 - [ ] tree based GUI representation
 - [ ] step-thru scraper with local browser engine
+- [ ] configurable action set/action plugins w/2.0 config tag
