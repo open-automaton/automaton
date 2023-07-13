@@ -1,7 +1,7 @@
 let AutomatonAction = require('../automaton-action');
 const DOM = require('../dom-tool').DOM;
 const Arrays = require('async-arrays');
-const libxmljs = require("libxmljs");
+const libxmljs = require("libxmljs2");
 const carlton = require('carlton');
 
 let Automaton = { Actions:{} };

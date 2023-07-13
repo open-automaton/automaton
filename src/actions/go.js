@@ -1,5 +1,5 @@
 const AutomatonAction = require('../automaton-action');
-const libxmljs = require("libxmljs");
+const libxmljs = require("libxmljs2");
 var parseURL = require('url-parse');
 const carlton = require('carlton');
 
